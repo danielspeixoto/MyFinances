@@ -5,6 +5,6 @@ package com.example.danielspeixoto.meufinanceiro.model.module;
  */
 public interface ISelectModel<T> {
 
-    void select(long id);
+    void select(String id);
 
 }

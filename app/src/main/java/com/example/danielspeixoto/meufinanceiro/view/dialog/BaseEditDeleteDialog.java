@@ -16,7 +16,7 @@ public abstract class BaseEditDeleteDialog extends DialogFragment {
     public static final String TAG = "editDelete";
     protected static final String ID = "_id";
     protected IDeletePresenter mDeletePresenter;
-    protected long id;
+    protected String id;
 
     @NonNull
     @Override

@@ -4,7 +4,7 @@ import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.presenter.InsertInstitutionPresenter;
 import com.example.danielspeixoto.meufinanceiro.view.module.IInsertView;
 
-public class InsertInstitutionActivity extends InstitutionDataActivity implements IInsertView<Institution>{
+public class InsertInstitutionActivity extends DataInstitutionActivity implements IInsertView<Institution>{
 
     @Override
     protected void save() {

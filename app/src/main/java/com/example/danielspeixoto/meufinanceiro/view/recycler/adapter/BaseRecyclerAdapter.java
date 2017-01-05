@@ -31,7 +31,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public void addItem(Object object) {
         data.add(object);
-        activity.runOnUiThread(() -> notifyDataSetChanged());
+        activity.runOnUiThread(this::notifyDataSetChanged);
     }
 
     public abstract void refreshData();

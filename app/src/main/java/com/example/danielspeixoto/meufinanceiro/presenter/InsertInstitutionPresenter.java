@@ -14,7 +14,6 @@ public class InsertInstitutionPresenter implements IInsertPresenter<Institution>
 
     private final IInsertView<Institution> mInsertView;
     private final IInsertModel<Institution> mInsertModel;
-    private Institution mInstitution;
 
     public InsertInstitutionPresenter(IInsertView<Institution> mInsertView) {
         this.mInsertView = mInsertView;
@@ -23,7 +22,6 @@ public class InsertInstitutionPresenter implements IInsertPresenter<Institution>
 
     @Override
     public void insert(Institution institution) {
-        mInstitution = institution;
         mInsertModel.insert(institution);
     }
 

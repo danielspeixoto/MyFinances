@@ -5,6 +5,6 @@ package com.example.danielspeixoto.meufinanceiro.model.module;
  */
 public interface IDeleteModel<T> {
 
-    void delete(long id);
+    void delete(String id);
 
 }

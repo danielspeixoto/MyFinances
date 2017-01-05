@@ -26,7 +26,7 @@ public class AllInstitutionsModel implements ISelectAllModel<Institution> {
 
     @Override
     public void selectAll() {
-            mDatabase.addChildEventListener(new ChildEventListener() {
+            mDatabase.orderByChild("name").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 mSelectAllPresenter.onReceiving(dataSnapshot.getValue(Institution.class));

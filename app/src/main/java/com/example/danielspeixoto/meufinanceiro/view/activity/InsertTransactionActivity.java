@@ -6,7 +6,7 @@ import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.presenter.InsertTransactionPresenter;
 import com.example.danielspeixoto.meufinanceiro.view.module.IInsertView;
 
-public class InsertTransactionActivity extends TransactionDataActivity implements IInsertView<Transaction> {
+public class InsertTransactionActivity extends DataTransactionActivity implements IInsertView<Transaction> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class InsertTransactionActivity extends TransactionDataActivity implement
     @Override
     protected void save() {
         super.save();
-        new InsertTransactionPresenter(this).insert(transaction);
+        new InsertTransactionPresenter(this).insert(mTransaction);
     }
 
     @Override
@@ -24,8 +24,4 @@ public class InsertTransactionActivity extends TransactionDataActivity implement
         showMessage("Transaction has been successfully created");
     }
 
-    @Override
-    public void onError(String message) {
-        showMessage(message);
-    }
 }

@@ -7,7 +7,7 @@ import com.example.danielspeixoto.meufinanceiro.util.IBaseModule;
  */
 public interface ISelectPresenter<T> extends IBaseModule {
 
-    void select(long id);
+    void select(String id);
 
     void onReceived(T t);
 

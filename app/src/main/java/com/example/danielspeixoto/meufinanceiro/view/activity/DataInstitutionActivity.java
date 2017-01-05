@@ -15,7 +15,7 @@ import butterknife.OnClick;
  * Created by danielspeixoto on 1/3/17.
  */
 
-public abstract class InstitutionDataActivity extends BaseActivity {
+public abstract class DataInstitutionActivity extends BaseActivity {
 
     Institution institution = new Institution();
 

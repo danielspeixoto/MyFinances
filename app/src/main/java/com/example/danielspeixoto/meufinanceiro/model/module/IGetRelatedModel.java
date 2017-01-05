@@ -5,5 +5,5 @@ package com.example.danielspeixoto.meufinanceiro.model.module;
  */
 public interface IGetRelatedModel<T> {
 
-    void getRelated(int parentIndex);
+    void getRelated(String parentIndex);
 }

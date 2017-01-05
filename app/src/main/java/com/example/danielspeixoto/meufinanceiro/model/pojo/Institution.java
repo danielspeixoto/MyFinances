@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * Created by danielspeixoto on 1/3/17.
  */
-@Data public class Institution {
+@Data public class Institution implements Comparable<Institution> {
 
     private String id;
     private String name;
@@ -15,4 +15,9 @@ import lombok.Data;
         return name;
     }
 
+
+    @Override
+    public int compareTo(Institution o) {
+        return o.getName().compareTo(getName());
+    }
 }

@@ -39,6 +39,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.danielspeixoto.meufinanceiro.view.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".view.activity.UpdateTransactionActivity"
+            android:label="UpdateTransactionActivity"
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.danielspeixoto.meufinanceiro.view.activity.MainActivity" />
+        </activity>
+        <activity android:name=".view.activity.InfoTransactionActivity"></activity>
     </application>
 
 </manifest>

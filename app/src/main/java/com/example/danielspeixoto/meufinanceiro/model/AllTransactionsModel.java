@@ -26,7 +26,7 @@ public class AllTransactionsModel implements ISelectAllModel<Transaction> {
 
     @Override
     public void selectAll() {
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        mDatabase.orderByChild("expirationDate").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 mSelectAllPresenter.onReceiving(dataSnapshot.getValue(Transaction.class));

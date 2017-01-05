@@ -24,9 +24,9 @@ import butterknife.OnClick;
  * Created by danielspeixoto on 1/3/17.
  */
 
-public abstract class TransactionDataActivity extends BaseActivity implements IListView<Institution> {
+public abstract class DataTransactionActivity extends BaseActivity implements IListView<Institution> {
 
-    Transaction transaction = new Transaction();
+    Transaction mTransaction = new Transaction();
     ArrayList<Institution> institutions = new ArrayList<>();
     ArrayAdapter mAdapter;
 
@@ -65,12 +65,17 @@ public abstract class TransactionDataActivity extends BaseActivity implements IL
 
     @OnClick(R.id.fab)
     protected void save() {
-        transaction.setName(nameEdit.getText().toString());
-        transaction.setAmount(Long.valueOf(amountEdit.getText().toString()));
-        transaction.setLaunchedDate(launchedDateEdit.getText().toString());
-        transaction.setExpirationDate(expirationDateEdit.getText().toString());
-        transaction.setComments(commentsEdit.getText().toString());
-        transaction.setDebt(debtButton.isChecked());
-        transaction.setInstitutionId(((Institution)institutionSpinner.getSelectedItem()).getId());
+        mTransaction.setAmount(Long.valueOf(amountEdit.getText().toString()));
+        mTransaction.setName(nameEdit.getText().toString());
+        mTransaction.setLaunchedDate(launchedDateEdit.getText().toString());
+        mTransaction.setExpirationDate(expirationDateEdit.getText().toString());
+        mTransaction.setComments(commentsEdit.getText().toString());
+        mTransaction.setDebt(debtButton.isChecked());
+        mTransaction.setInstitutionId(((Institution)institutionSpinner.getSelectedItem()).getId());
+    }
+
+    @Override
+    public void onError(String message) {
+        showMessage(message);
     }
 }

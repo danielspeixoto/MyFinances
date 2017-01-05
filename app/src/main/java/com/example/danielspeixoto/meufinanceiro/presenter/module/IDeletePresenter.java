@@ -7,7 +7,7 @@ import com.example.danielspeixoto.meufinanceiro.util.IBaseModule;
  */
 public interface IDeletePresenter<T> extends IBaseModule {
 
-    void delete(long id);
+    void delete(String id);
 
     void onDeleted();
 

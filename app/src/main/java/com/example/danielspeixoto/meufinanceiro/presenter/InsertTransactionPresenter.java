@@ -14,7 +14,6 @@ public class InsertTransactionPresenter implements IInsertPresenter<Transaction>
 
     private final IInsertView<Transaction> mInsertView;
     private final IInsertModel<Transaction> mInsertModel;
-    private Transaction mTransaction;
 
     public InsertTransactionPresenter(IInsertView<Transaction> mInsertView) {
         this.mInsertView = mInsertView;
@@ -23,7 +22,6 @@ public class InsertTransactionPresenter implements IInsertPresenter<Transaction>
 
     @Override
     public void insert(Transaction Transaction) {
-        mTransaction = Transaction;
         mInsertModel.insert(Transaction);
     }
 
