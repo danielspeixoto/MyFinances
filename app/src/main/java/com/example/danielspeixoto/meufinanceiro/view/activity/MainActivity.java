@@ -1,6 +1,5 @@
 package com.example.danielspeixoto.meufinanceiro.view.activity;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -49,7 +48,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.fab)
     public void insertTransaction() {
-        startActivity(new Intent(MainActivity.this, InsertTransactionActivity.class));
+        goToActivity(InsertTransactionActivity.class);
     }
 
     @Override

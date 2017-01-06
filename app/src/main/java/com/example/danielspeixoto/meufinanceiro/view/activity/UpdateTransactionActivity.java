@@ -5,20 +5,20 @@ import android.support.annotation.Nullable;
 import android.widget.RadioButton;
 
 import com.example.danielspeixoto.meufinanceiro.R;
-import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
+import com.example.danielspeixoto.meufinanceiro.module.UpdateTransaction;
 import com.example.danielspeixoto.meufinanceiro.presenter.UpdateTransactionPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IUpdateView;
 
 import butterknife.BindView;
 
 /**
  * Created by danielspeixoto on 1/5/17.
  */
-public class UpdateTransactionActivity extends DataTransactionActivity implements IUpdateView<Transaction> {
+public class UpdateTransactionActivity extends DataTransactionActivity implements UpdateTransaction.View<Transaction> {
 
     @BindView(R.id.creditButton)
     RadioButton creditButton;
+    UpdateTransaction.Presenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,25 +34,17 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
         } else {
             creditButton.toggle();
         }
+        mPresenter = new UpdateTransactionPresenter(this);
+    }
+
+    @Override
+    public void setRelatedItemIndex(int index) {
+        institutionSpinner.setSelection(index);
     }
 
     @Override
     public void save() {
         super.save();
-        new UpdateTransactionPresenter(this).update(mTransaction);
-    }
 
-    @Override
-    public void addItem(Institution institution) {
-        super.addItem(institution);
-        if(institution.getId().equals(mTransaction.getInstitutionId())) {
-            institutionSpinner.setSelection(institutions.size() - 1);
-        }
-    }
-
-    @Override
-    public void onObjectUpdated() {
-        showMessage("Transaction updated");
-        finish();
     }
 }

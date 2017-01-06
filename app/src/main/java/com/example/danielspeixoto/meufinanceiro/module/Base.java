@@ -9,11 +9,11 @@ import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
 public class Base {
 
     public interface Presenter {
-        void onError(String message);
+
     }
 
     public interface View {
         BaseActivity getActivity();
-        void onError(String message);
+        void goToActivity(Class clazz);
     }
 }

@@ -2,10 +2,9 @@ package com.example.danielspeixoto.meufinanceiro.view.recycler.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.danielspeixoto.meufinanceiro.module.CRUD;
 import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
-import com.example.danielspeixoto.meufinanceiro.view.module.IAllView;
 
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ import lombok.Setter;
  * Created by danielspeixoto on 17/11/16.
  */
 public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements IAllView {
+        implements CRUD.All.View {
 
     @Getter
     protected BaseActivity activity;
@@ -47,7 +46,8 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         return data.size();
     }
 
-    protected void showMessage(String message) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+    @Override
+    public void goToActivity(Class clazz) {
+        getActivity().goToActivity(clazz);
     }
 }

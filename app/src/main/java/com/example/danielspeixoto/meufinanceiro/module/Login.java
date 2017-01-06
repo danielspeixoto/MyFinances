@@ -16,6 +16,5 @@ public class Login {
     }
 
     public interface View extends Base.View {
-        void onLoggedIn();
     }
 }

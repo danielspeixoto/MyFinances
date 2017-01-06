@@ -11,8 +11,6 @@ import android.widget.Spinner;
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.presenter.AllInstitutionsPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IAllView;
 
 import java.util.ArrayList;
 
@@ -24,7 +22,7 @@ import butterknife.OnClick;
  * Created by danielspeixoto on 1/3/17.
  */
 
-public abstract class DataTransactionActivity extends BaseActivity implements IAllView<Institution> {
+public abstract class DataTransactionActivity extends BaseActivity {
 
     Transaction mTransaction = new Transaction();
     ArrayList<Institution> institutions = new ArrayList<>();
@@ -55,9 +53,8 @@ public abstract class DataTransactionActivity extends BaseActivity implements IA
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, institutions);
         institutionSpinner.setAdapter(mAdapter);
-        new AllInstitutionsPresenter(this).selectAll();
     }
-    @Override
+
     public void addItem(Institution institution) {
         institutions.add(institution);
         mAdapter.notifyDataSetChanged();

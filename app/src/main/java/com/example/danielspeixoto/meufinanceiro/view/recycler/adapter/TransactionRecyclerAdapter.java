@@ -37,8 +37,4 @@ public class TransactionRecyclerAdapter extends AllRecyclerAdapter {
         return new TransactionHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_transaction_item, parent, false), this);
     }
 
-    @Override
-    public void onError(String message) {
-
-    }
 }

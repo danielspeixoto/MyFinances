@@ -1,5 +1,6 @@
 package com.example.danielspeixoto.meufinanceiro.view.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -23,8 +24,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Base.Vie
         return this;
     }
 
-    @Override
-    public void onError(String message) {
-        showMessage(message);
+    public void goToActivity(Class clazz) {
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
     }
 }

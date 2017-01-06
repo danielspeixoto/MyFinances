@@ -39,8 +39,4 @@ public class DrawerRecyclerAdapter extends BaseRecyclerAdapter {
                 this);
     }
 
-    @Override
-    public void onError(String message) {
-
-    }
 }

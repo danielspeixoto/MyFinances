@@ -2,15 +2,18 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 
 import android.os.Bundle;
 
+import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
+import com.example.danielspeixoto.meufinanceiro.module.CRUD;
+import com.example.danielspeixoto.meufinanceiro.presenter.AllInstitutionsPresenter;
 import com.example.danielspeixoto.meufinanceiro.presenter.InsertTransactionPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IInsertView;
 
-public class InsertTransactionActivity extends DataTransactionActivity implements IInsertView<Transaction> {
+public class InsertTransactionActivity extends DataTransactionActivity implements CRUD.Insert.View<Transaction>, CRUD.All.View<Institution> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new AllInstitutionsPresenter(this).selectAll();
     }
 
     @Override
@@ -18,10 +21,4 @@ public class InsertTransactionActivity extends DataTransactionActivity implement
         super.save();
         new InsertTransactionPresenter(this).insert(mTransaction);
     }
-
-    @Override
-    public void onObjectInserted() {
-        showMessage("Transaction has been successfully created");
-    }
-
 }

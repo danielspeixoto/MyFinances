@@ -1,37 +1,41 @@
 package com.example.danielspeixoto.meufinanceiro.presenter;
 
-import com.example.danielspeixoto.meufinanceiro.model.SelectInstitutionModel;
-import com.example.danielspeixoto.meufinanceiro.model.module.ISelectModel;
+import com.example.danielspeixoto.meufinanceiro.model.CRUDInstitutions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
-import com.example.danielspeixoto.meufinanceiro.presenter.module.ISelectPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.ISelectView;
+import com.example.danielspeixoto.meufinanceiro.module.CRUD;
+
+import rx.Subscriber;
 
 /**
  * Created by danielspeixoto on 1/5/17.
  */
 
-public class SelectInstitutionPresenter implements ISelectPresenter<Institution> {
+public class SelectInstitutionPresenter implements CRUD.Select.Presenter<Institution> {
 
-    private ISelectView<Institution> mView;
-    private ISelectModel<Institution> mModel;
+    private CRUD.Select.View<Institution> mView;
 
-    public SelectInstitutionPresenter(ISelectView mView) {
+    public SelectInstitutionPresenter(CRUD.Select.View mView) {
         this.mView = mView;
-        this.mModel = new SelectInstitutionModel(this);
     }
 
     @Override
     public void select(String id) {
-        mModel.select(id);
+        new CRUDInstitutions().select(id).subscribe(new Subscriber<Institution>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Institution institution) {
+                mView.fillData(institution);
+            }
+        });
     }
 
-    @Override
-    public void onReceived(Institution institution) {
-        mView.fillData(institution);
-    }
-
-    @Override
-    public void onError(String message) {
-        mView.onError(message);
-    }
 }

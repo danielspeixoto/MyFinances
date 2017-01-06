@@ -1,37 +1,40 @@
 package com.example.danielspeixoto.meufinanceiro.presenter;
 
-import com.example.danielspeixoto.meufinanceiro.model.AllTransactionsModel;
-import com.example.danielspeixoto.meufinanceiro.model.module.ISelectAllModel;
+import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.presenter.module.IAllPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IAllView;
+import com.example.danielspeixoto.meufinanceiro.module.CRUD;
+
+import rx.Subscriber;
 
 /**
  * Created by danielspeixoto on 1/5/17.
  */
 
-public class AllTransactionsPresenter implements IAllPresenter<Transaction> {
+public class AllTransactionsPresenter implements CRUD.All.Presenter<Transaction> {
 
-    private IAllView<Transaction> mView;
-    private ISelectAllModel<Transaction> mModel;
+    private CRUD.All.View<Transaction> mView;
 
-    public AllTransactionsPresenter(IAllView mView) {
+    public AllTransactionsPresenter(CRUD.All.View mView) {
         this.mView = mView;
-        this.mModel = new AllTransactionsModel(this);
     }
 
     @Override
     public void selectAll() {
-        mModel.selectAll();
-    }
+        new CRUDTransactions().selectAll().subscribe(new Subscriber<Transaction>() {
+            @Override
+            public void onCompleted() {
 
-    @Override
-    public void onReceiving(Transaction transaction) {
-        mView.addItem(transaction);
-    }
+            }
 
-    @Override
-    public void onError(String message) {
-        mView.onError(message);
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Transaction transaction) {
+                mView.addItem(transaction);
+            }
+        });
     }
 }

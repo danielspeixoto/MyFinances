@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.example.danielspeixoto.meufinanceiro.module.Login;
+import com.example.danielspeixoto.meufinanceiro.view.activity.MainActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -46,7 +47,7 @@ public class LoginPresenter implements Login.Presenter, GoogleApiClient.OnConnec
     @Override
     public void checkStatus() {
         if(mAuth.getCurrentUser() != null) {
-            mView.onLoggedIn();
+            mView.goToActivity(MainActivity.class);
         }
     }
 
@@ -56,9 +57,9 @@ public class LoginPresenter implements Login.Presenter, GoogleApiClient.OnConnec
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             firebaseAuthWithGoogle(account);
-            mView.onLoggedIn();
+            mView.goToActivity(MainActivity.class);
         } else {
-            mView.onError("An error occurred");
+            mView.getActivity().showMessage("An error occurred");
         }
     }
 
@@ -67,13 +68,13 @@ public class LoginPresenter implements Login.Presenter, GoogleApiClient.OnConnec
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(mView.getActivity(), task -> {
                     if (!task.isSuccessful()) {
-                        mView.onError("Authentication failed.");
+                        mView.getActivity().showMessage("Authentication failed.");
                     }
                 });
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        mView.onError("Connection was not established");
+        mView.getActivity().showMessage("Connection was not established");
     }
 }

@@ -7,15 +7,15 @@ import android.widget.TextView;
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
+import com.example.danielspeixoto.meufinanceiro.module.CRUD;
+import com.example.danielspeixoto.meufinanceiro.presenter.DeleteTransactionPresenter;
 import com.example.danielspeixoto.meufinanceiro.presenter.SelectInstitutionPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IDeleteView;
-import com.example.danielspeixoto.meufinanceiro.view.module.ISelectView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class InfoTransactionActivity extends BaseActivity implements ISelectView<Institution>, IDeleteView<Transaction> {
+public class InfoTransactionActivity extends BaseActivity implements CRUD.Select.View<Institution>, CRUD.Delete.View<Transaction> {
 
     Transaction mTransaction;
 
@@ -61,11 +61,6 @@ public class InfoTransactionActivity extends BaseActivity implements ISelectView
 
     @OnClick(R.id.deleteButton)
     public void delete() {
-    }
-
-    @Override
-    public void onItemDeleted() {
-        showMessage("Transaction deleted");
-        finish();
+        new DeleteTransactionPresenter(this).delete(mTransaction.getId());
     }
 }

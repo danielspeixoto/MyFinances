@@ -1,37 +1,25 @@
 package com.example.danielspeixoto.meufinanceiro.presenter;
 
-import com.example.danielspeixoto.meufinanceiro.model.InsertInstitutionModel;
-import com.example.danielspeixoto.meufinanceiro.model.module.IInsertModel;
+import com.example.danielspeixoto.meufinanceiro.model.CRUDInstitutions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
-import com.example.danielspeixoto.meufinanceiro.presenter.module.IInsertPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IInsertView;
+import com.example.danielspeixoto.meufinanceiro.module.CRUD;
 
 /**
  * Created by danielspeixoto on 1/4/17.
  */
 
-public class InsertInstitutionPresenter implements IInsertPresenter<Institution> {
+public class InsertInstitutionPresenter implements CRUD.Insert.Presenter<Institution> {
 
-    private final IInsertView<Institution> mView;
-    private final IInsertModel<Institution> mModel;
+    private final CRUD.Insert.View<Institution> mView;
 
-    public InsertInstitutionPresenter(IInsertView<Institution> mView) {
+    public InsertInstitutionPresenter(CRUD.Insert.View<Institution> mView) {
         this.mView = mView;
-        this.mModel = new InsertInstitutionModel(this);
     }
 
     @Override
     public void insert(Institution institution) {
-        mModel.insert(institution);
+        new CRUDInstitutions().insert(institution);
+        mView.getActivity().showMessage("Institution has been created");
     }
 
-    @Override
-    public void onInserted() {
-        mView.onObjectInserted();
-    }
-
-    @Override
-    public void onError(String message) {
-        mView.onError(message);
-    }
 }

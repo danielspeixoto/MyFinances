@@ -1,37 +1,26 @@
 package com.example.danielspeixoto.meufinanceiro.presenter;
 
-import com.example.danielspeixoto.meufinanceiro.model.InsertTransactionModel;
-import com.example.danielspeixoto.meufinanceiro.model.module.IInsertModel;
+import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.presenter.module.IInsertPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IInsertView;
+import com.example.danielspeixoto.meufinanceiro.module.CRUD;
 
 /**
  * Created by danielspeixoto on 1/4/17.
  */
 
-public class InsertTransactionPresenter implements IInsertPresenter<Transaction> {
+public class InsertTransactionPresenter implements CRUD.Insert.Presenter<Transaction> {
 
-    private final IInsertView<Transaction> mView;
-    private final IInsertModel<Transaction> mModel;
+    private final CRUD.Insert.View<Transaction> mView;
 
-    public InsertTransactionPresenter(IInsertView<Transaction> mView) {
+    public InsertTransactionPresenter(CRUD.Insert.View<Transaction> mView) {
         this.mView = mView;
-        this.mModel = new InsertTransactionModel(this);
     }
 
     @Override
-    public void insert(Transaction Transaction) {
-        mModel.insert(Transaction);
+    public void insert(Transaction transaction) {
+        new CRUDTransactions().insert(transaction);
+        mView.getActivity().showMessage("Transaction has been created");
     }
 
-    @Override
-    public void onInserted() {
-        mView.onObjectInserted();
-    }
 
-    @Override
-    public void onError(String message) {
-        mView.onError(message);
-    }
 }

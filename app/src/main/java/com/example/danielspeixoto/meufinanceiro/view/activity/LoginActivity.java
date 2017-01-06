@@ -31,12 +31,6 @@ public class LoginActivity extends BaseActivity implements Login.View {
     }
 
     @Override
-    public void onLoggedIn() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
