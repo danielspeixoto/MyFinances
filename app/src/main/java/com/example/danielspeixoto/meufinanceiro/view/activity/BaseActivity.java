@@ -2,8 +2,10 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.module.Base;
 
 /**
@@ -27,5 +29,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Base.Vie
     public void goToActivity(Class clazz) {
         Intent intent = new Intent(this, clazz);
         startActivity(intent);
+    }
+
+    protected void setUpToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

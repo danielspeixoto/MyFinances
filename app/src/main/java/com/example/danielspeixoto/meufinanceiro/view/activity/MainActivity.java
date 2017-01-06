@@ -6,10 +6,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.danielspeixoto.meufinanceiro.R;
+import com.example.danielspeixoto.meufinanceiro.util.DateString;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecyclerAdapter;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.DrawerRecyclerAdapter;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.TransactionRecyclerAdapter;
@@ -33,13 +33,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        showMessage(DateString.getToday());
         drawer.setAdapter(new DrawerRecyclerAdapter(this));
         drawer.setLayoutManager(new LinearLayoutManager(this));
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.accept, R.string.decline);
         drawerLayout.addDrawerListener(drawerToggle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setUpToolbar();
         mAdapter = new TransactionRecyclerAdapter(this);
         list = ButterKnife.findById(this, R.id.recentList);
         list.setLayoutManager(new LinearLayoutManager(MainActivity.this));

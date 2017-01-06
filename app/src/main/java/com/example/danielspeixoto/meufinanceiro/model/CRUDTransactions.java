@@ -6,6 +6,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -20,11 +21,30 @@ public class CRUDTransactions extends CRUD {
         mDatabase = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Transaction.class.getSimpleName());
     }
 
+    public Observable<Transaction> select(String id) {
+        return Observable.create(new Observable.OnSubscribe<Transaction>() {
+            @Override
+            public void call(Subscriber<? super Transaction> subscriber) {
+                mDatabase.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        subscriber.onNext(dataSnapshot.getValue(Transaction.class));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        subscriber.onError(new Throwable(databaseError.getMessage()));
+                    }
+                });
+            }
+        });
+    }
+
     public Observable<Transaction> selectAll() {
         return Observable.create(new Observable.OnSubscribe<Transaction>() {
             @Override
             public void call(final Subscriber<? super Transaction> subscriber) {
-                mDatabase.orderByChild("expirationDate").addChildEventListener(new ChildEventListener() {
+                mDatabase.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         subscriber.onNext(dataSnapshot.getValue(Transaction.class));
@@ -44,6 +64,7 @@ public class CRUDTransactions extends CRUD {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
+                        subscriber.onError(new Throwable(databaseError.getMessage()));
                     }
                 });
             }

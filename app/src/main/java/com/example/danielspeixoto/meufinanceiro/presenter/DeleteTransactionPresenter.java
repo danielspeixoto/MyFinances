@@ -19,8 +19,11 @@ public class DeleteTransactionPresenter implements CRUD.Delete.Presenter<Transac
 
     @Override
     public void delete(String id) {
-        new AreYouSureDialog(() -> new CRUDTransactions().delete(id)).show(mView.getActivity().getSupportFragmentManager(), AreYouSureDialog.TAG);
-        mView.getActivity().showMessage("Transaction deleted");
-        mView.getActivity().finish();
+        new AreYouSureDialog(() -> {
+            new CRUDTransactions().delete(id);
+            mView.getActivity().showMessage("Transaction deleted");
+            mView.getActivity().finish();
+        }).show(mView.getActivity().getSupportFragmentManager(), AreYouSureDialog.TAG);
+
     }
 }

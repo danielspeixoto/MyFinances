@@ -8,6 +8,7 @@ import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.UpdateTransaction;
 import com.example.danielspeixoto.meufinanceiro.presenter.UpdateTransactionPresenter;
+import com.example.danielspeixoto.meufinanceiro.util.DateString;
 
 import butterknife.BindView;
 
@@ -18,7 +19,7 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
 
     @BindView(R.id.creditButton)
     RadioButton creditButton;
-    UpdateTransaction.Presenter mPresenter;
+    UpdateTransaction.Presenter<Transaction> mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +27,10 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
         mTransaction = getIntent().getParcelableExtra(Transaction.class.getSimpleName());
         nameEdit.setText(mTransaction.getName());
         amountEdit.setText(Long.toString(mTransaction.getAmount()));
-        launchedDateEdit.setText(mTransaction.getLaunchedDate());
-        expirationDateEdit.setText(mTransaction.getExpirationDate());
+        DateString dateString = new DateString(mTransaction.getLaunchedDate());
+        launchedDate.updateDate(dateString.stringToYear(), dateString.stringToMonth(), dateString.stringToDay());
+        dateString.setDate(mTransaction.getExpirationDate());
+        expirationDate.updateDate(dateString.stringToYear(), dateString.stringToMonth(), dateString.stringToDay());
         commentsEdit.setText(mTransaction.getComments());
         if(mTransaction.isDebt()) {
             debtButton.toggle();
@@ -45,6 +48,6 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
     @Override
     public void save() {
         super.save();
-
+        mPresenter.update(mTransaction);
     }
 }

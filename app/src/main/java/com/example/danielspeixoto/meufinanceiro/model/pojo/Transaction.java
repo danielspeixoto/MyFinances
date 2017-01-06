@@ -3,6 +3,8 @@ package com.example.danielspeixoto.meufinanceiro.model.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.danielspeixoto.meufinanceiro.util.DateString;
+
 import lombok.Data;
 
 /**
@@ -68,6 +70,6 @@ public class Transaction implements Comparable<Transaction>, Parcelable {
 
     @Override
     public int compareTo(Transaction o) {
-        return o.getExpirationDate().compareTo(getExpirationDate());
+        return DateString.compareDates(o.getExpirationDate(), getExpirationDate());
     }
 }

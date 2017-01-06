@@ -47,7 +47,7 @@ public class LoginPresenter implements Login.Presenter, GoogleApiClient.OnConnec
     @Override
     public void checkStatus() {
         if(mAuth.getCurrentUser() != null) {
-            mView.goToActivity(MainActivity.class);
+            isLoggedIn();
         }
     }
 
@@ -57,7 +57,7 @@ public class LoginPresenter implements Login.Presenter, GoogleApiClient.OnConnec
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             firebaseAuthWithGoogle(account);
-            mView.goToActivity(MainActivity.class);
+            isLoggedIn();
         } else {
             mView.getActivity().showMessage("An error occurred");
         }
@@ -76,5 +76,10 @@ public class LoginPresenter implements Login.Presenter, GoogleApiClient.OnConnec
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mView.getActivity().showMessage("Connection was not established");
+    }
+
+    private void isLoggedIn() {
+        mView.goToActivity(MainActivity.class);
+        mView.getActivity().finish();
     }
 }

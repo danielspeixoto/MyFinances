@@ -2,8 +2,8 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
+import com.example.danielspeixoto.meufinanceiro.util.Convert;
 
 import java.util.ArrayList;
 
@@ -32,25 +33,23 @@ public abstract class DataTransactionActivity extends BaseActivity {
     EditText nameEdit;
     @BindView(R.id.amountEdit)
     EditText amountEdit;
-    @BindView(R.id.launchedDateEdit)
-    EditText launchedDateEdit;
-    @BindView(R.id.expirationDateEdit)
-    EditText expirationDateEdit;
     @BindView(R.id.commentsEdit)
     EditText commentsEdit;
     @BindView(R.id.institutionSpinner)
     Spinner institutionSpinner;
     @BindView(R.id.debtButton)
     RadioButton debtButton;
+    @BindView(R.id.launchedDate)
+    DatePicker launchedDate;
+    @BindView(R.id.expirationDate)
+    DatePicker expirationDate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_data);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setUpToolbar();
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, institutions);
         institutionSpinner.setAdapter(mAdapter);
     }
@@ -64,8 +63,8 @@ public abstract class DataTransactionActivity extends BaseActivity {
     protected void save() {
         mTransaction.setAmount(Long.valueOf(amountEdit.getText().toString()));
         mTransaction.setName(nameEdit.getText().toString());
-        mTransaction.setLaunchedDate(launchedDateEdit.getText().toString());
-        mTransaction.setExpirationDate(expirationDateEdit.getText().toString());
+        mTransaction.setLaunchedDate(Convert.dateToString(launchedDate));
+        mTransaction.setExpirationDate(Convert.dateToString(expirationDate));
         mTransaction.setComments(commentsEdit.getText().toString());
         mTransaction.setDebt(debtButton.isChecked());
         mTransaction.setInstitutionId(((Institution)institutionSpinner.getSelectedItem()).getId());

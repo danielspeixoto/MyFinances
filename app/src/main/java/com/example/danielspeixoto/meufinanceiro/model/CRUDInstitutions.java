@@ -33,7 +33,7 @@ public class CRUDInstitutions extends CRUD {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        subscriber.onError(new Throwable(databaseError.getMessage()));
                     }
                 });
             }
@@ -64,6 +64,7 @@ public class CRUDInstitutions extends CRUD {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
+                        subscriber.onError(new Throwable(databaseError.getMessage()));
                     }
                 });
             }

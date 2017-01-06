@@ -10,6 +10,8 @@ import com.example.danielspeixoto.meufinanceiro.presenter.AllTransactionsPresent
 import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.holder.TransactionHolder;
 
+import java.util.Collections;
+
 /**
  * Created by danielspeixoto on 1/4/17.
  */
@@ -23,13 +25,9 @@ public class TransactionRecyclerAdapter extends AllRecyclerAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Transaction transaction = (Transaction) data.get(position);
         TransactionHolder transactionHolder = (TransactionHolder) holder;
-        transactionHolder.setId(transaction.getId());
-        transactionHolder.setIndex(position);
-        transactionHolder.getAmountText().setText("$" + transaction.getAmount());
-        transactionHolder.getNameText().setText(transaction.getName());
-        transactionHolder.getExpirationText().setText(transaction.getExpirationDate());
+        transactionHolder.setTransaction((Transaction) data.get(position));
+        transactionHolder.onPostCreated();
     }
 
     @Override
@@ -37,4 +35,10 @@ public class TransactionRecyclerAdapter extends AllRecyclerAdapter {
         return new TransactionHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_transaction_item, parent, false), this);
     }
 
+    @Override
+    public void addItem(Object object) {
+        data.add(object);
+        Collections.sort(data);
+        notifyDataSetChanged();
+    }
 }

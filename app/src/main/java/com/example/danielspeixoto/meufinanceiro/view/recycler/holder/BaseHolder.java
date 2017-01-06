@@ -23,4 +23,10 @@ public abstract class BaseHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    protected Object getSelf() {
+        return mAdapter.getData().get(index);
+    }
+
+
+
 }

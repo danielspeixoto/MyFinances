@@ -1,7 +1,6 @@
 package com.example.danielspeixoto.meufinanceiro.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
 import com.example.danielspeixoto.meufinanceiro.R;
@@ -27,9 +26,7 @@ public abstract class DataInstitutionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_institution_data);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setUpToolbar();
     }
 
     @OnClick(R.id.fab)
