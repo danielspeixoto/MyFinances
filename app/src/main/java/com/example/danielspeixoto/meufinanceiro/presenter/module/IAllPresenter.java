@@ -1,11 +1,11 @@
 package com.example.danielspeixoto.meufinanceiro.presenter.module;
 
-import com.example.danielspeixoto.meufinanceiro.util.IBaseModule;
+import com.example.danielspeixoto.meufinanceiro.module.Base;
 
 /**
  * Created by danielspeixoto on 13/11/16.
  */
-public interface ISelectAllPresenter<T> extends IBaseModule {
+public interface IAllPresenter<T> extends Base.Presenter {
 
     void selectAll();
 

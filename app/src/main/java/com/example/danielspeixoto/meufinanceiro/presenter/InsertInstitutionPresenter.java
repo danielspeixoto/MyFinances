@@ -12,26 +12,26 @@ import com.example.danielspeixoto.meufinanceiro.view.module.IInsertView;
 
 public class InsertInstitutionPresenter implements IInsertPresenter<Institution> {
 
-    private final IInsertView<Institution> mInsertView;
-    private final IInsertModel<Institution> mInsertModel;
+    private final IInsertView<Institution> mView;
+    private final IInsertModel<Institution> mModel;
 
-    public InsertInstitutionPresenter(IInsertView<Institution> mInsertView) {
-        this.mInsertView = mInsertView;
-        this.mInsertModel = new InsertInstitutionModel(this);
+    public InsertInstitutionPresenter(IInsertView<Institution> mView) {
+        this.mView = mView;
+        this.mModel = new InsertInstitutionModel(this);
     }
 
     @Override
     public void insert(Institution institution) {
-        mInsertModel.insert(institution);
+        mModel.insert(institution);
     }
 
     @Override
     public void onInserted() {
-        mInsertView.onObjectInserted();
+        mView.onObjectInserted();
     }
 
     @Override
     public void onError(String message) {
-        mInsertView.onError(message);
+        mView.onError(message);
     }
 }

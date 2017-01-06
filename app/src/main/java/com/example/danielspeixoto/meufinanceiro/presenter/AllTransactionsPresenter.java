@@ -3,35 +3,35 @@ package com.example.danielspeixoto.meufinanceiro.presenter;
 import com.example.danielspeixoto.meufinanceiro.model.AllTransactionsModel;
 import com.example.danielspeixoto.meufinanceiro.model.module.ISelectAllModel;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.presenter.module.ISelectAllPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IListView;
+import com.example.danielspeixoto.meufinanceiro.presenter.module.IAllPresenter;
+import com.example.danielspeixoto.meufinanceiro.view.module.IAllView;
 
 /**
  * Created by danielspeixoto on 1/5/17.
  */
 
-public class AllTransactionsPresenter implements ISelectAllPresenter<Transaction> {
+public class AllTransactionsPresenter implements IAllPresenter<Transaction> {
 
-    private IListView<Transaction> mListView;
-    private ISelectAllModel<Transaction> mSelectAllModel;
+    private IAllView<Transaction> mView;
+    private ISelectAllModel<Transaction> mModel;
 
-    public AllTransactionsPresenter(IListView mListView) {
-        this.mListView = mListView;
-        this.mSelectAllModel = new AllTransactionsModel(this);
+    public AllTransactionsPresenter(IAllView mView) {
+        this.mView = mView;
+        this.mModel = new AllTransactionsModel(this);
     }
 
     @Override
     public void selectAll() {
-        mSelectAllModel.selectAll();
+        mModel.selectAll();
     }
 
     @Override
     public void onReceiving(Transaction transaction) {
-        mListView.addItem(transaction);
+        mView.addItem(transaction);
     }
 
     @Override
     public void onError(String message) {
-        mListView.onError(message);
+        mView.onError(message);
     }
 }

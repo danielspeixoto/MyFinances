@@ -12,26 +12,26 @@ import com.example.danielspeixoto.meufinanceiro.view.module.IUpdateView;
 
 public class UpdateTransactionPresenter implements IUpdatePresenter<Transaction> {
 
-    private final IUpdateView<Transaction> mUpdateView;
-    private final IUpdateModel<Transaction> mUpdateModel;
+    private final IUpdateView<Transaction> mView;
+    private final IUpdateModel<Transaction> mModel;
 
-    public UpdateTransactionPresenter(IUpdateView<Transaction> mUpdateView) {
-        this.mUpdateView = mUpdateView;
-        this.mUpdateModel = new UpdateTransactionModel(this);
+    public UpdateTransactionPresenter(IUpdateView<Transaction> mView) {
+        this.mView = mView;
+        this.mModel = new UpdateTransactionModel(this);
     }
 
     @Override
     public void update(Transaction Transaction) {
-        mUpdateModel.update(Transaction);
+        mModel.update(Transaction);
     }
 
     @Override
     public void onUpdated() {
-        mUpdateView.onObjectUpdated();
+        mView.onObjectUpdated();
     }
 
     @Override
     public void onError(String message) {
-        mUpdateView.onError(message);
+        mView.onError(message);
     }
 }

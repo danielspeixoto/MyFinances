@@ -20,7 +20,6 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
     @BindView(R.id.creditButton)
     RadioButton creditButton;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

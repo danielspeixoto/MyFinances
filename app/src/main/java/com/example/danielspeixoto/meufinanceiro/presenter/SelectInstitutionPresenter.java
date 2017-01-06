@@ -12,26 +12,26 @@ import com.example.danielspeixoto.meufinanceiro.view.module.ISelectView;
 
 public class SelectInstitutionPresenter implements ISelectPresenter<Institution> {
 
-    private ISelectView<Institution> mSelectView;
-    private ISelectModel<Institution> mSelectModel;
+    private ISelectView<Institution> mView;
+    private ISelectModel<Institution> mModel;
 
-    public SelectInstitutionPresenter(ISelectView mSelectView) {
-        this.mSelectView = mSelectView;
-        this.mSelectModel = new SelectInstitutionModel(this);
+    public SelectInstitutionPresenter(ISelectView mView) {
+        this.mView = mView;
+        this.mModel = new SelectInstitutionModel(this);
     }
 
     @Override
     public void select(String id) {
-        mSelectModel.select(id);
+        mModel.select(id);
     }
 
     @Override
     public void onReceived(Institution institution) {
-        mSelectView.fillData(institution);
+        mView.fillData(institution);
     }
 
     @Override
     public void onError(String message) {
-
+        mView.onError(message);
     }
 }

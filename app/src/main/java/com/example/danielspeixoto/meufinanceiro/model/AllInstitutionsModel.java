@@ -2,7 +2,7 @@ package com.example.danielspeixoto.meufinanceiro.model;
 
 import com.example.danielspeixoto.meufinanceiro.model.module.ISelectAllModel;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
-import com.example.danielspeixoto.meufinanceiro.presenter.module.ISelectAllPresenter;
+import com.example.danielspeixoto.meufinanceiro.presenter.module.IAllPresenter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -16,10 +16,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AllInstitutionsModel implements ISelectAllModel<Institution> {
 
-    private final ISelectAllPresenter<Institution> mSelectAllPresenter;
+    private final IAllPresenter<Institution> mSelectAllPresenter;
     private DatabaseReference mDatabase;
 
-    public AllInstitutionsModel(ISelectAllPresenter mSelectAllPresenter) {
+    public AllInstitutionsModel(IAllPresenter mSelectAllPresenter) {
         this.mSelectAllPresenter = mSelectAllPresenter;
         mDatabase = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Institution.class.getSimpleName());
     }

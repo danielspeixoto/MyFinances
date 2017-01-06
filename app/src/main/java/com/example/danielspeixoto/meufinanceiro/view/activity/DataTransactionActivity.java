@@ -12,7 +12,7 @@ import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.presenter.AllInstitutionsPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.module.IListView;
+import com.example.danielspeixoto.meufinanceiro.view.module.IAllView;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * Created by danielspeixoto on 1/3/17.
  */
 
-public abstract class DataTransactionActivity extends BaseActivity implements IListView<Institution> {
+public abstract class DataTransactionActivity extends BaseActivity implements IAllView<Institution> {
 
     Transaction mTransaction = new Transaction();
     ArrayList<Institution> institutions = new ArrayList<>();
@@ -72,10 +72,5 @@ public abstract class DataTransactionActivity extends BaseActivity implements IL
         mTransaction.setComments(commentsEdit.getText().toString());
         mTransaction.setDebt(debtButton.isChecked());
         mTransaction.setInstitutionId(((Institution)institutionSpinner.getSelectedItem()).getId());
-    }
-
-    @Override
-    public void onError(String message) {
-        showMessage(message);
     }
 }

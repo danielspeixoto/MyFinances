@@ -13,26 +13,27 @@ import com.example.danielspeixoto.meufinanceiro.view.module.IDeleteView;
 
 public class DeleteTransactionPresenter implements IDeletePresenter<Transaction> {
 
-    private IDeleteView<Transaction> mDeleteView;
-    private IDeleteModel<Transaction> mDeleteModel;
+    private IDeleteView<Transaction> mView;
+    private IDeleteModel<Transaction> mModel;
 
-    public DeleteTransactionPresenter(IDeleteView mDeleteView) {
-        this.mDeleteView = mDeleteView;
-        this.mDeleteModel = new DeleteTransactionModel(this);
+    public DeleteTransactionPresenter(IDeleteView mView) {
+        this.mView = mView;
+        this.mModel = new DeleteTransactionModel(this);
     }
 
     @Override
     public void delete(String id) {
-        mDeleteModel.delete(id);
+        new AreYouSureDialog(() -> mModel.delete(id)).show(mView.getActivity().getSupportFragmentManager(), AreYouSureDialog.TAG);
+        mModel.delete(id);
     }
 
     @Override
     public void onDeleted() {
-        mDeleteView.onItemDeleted();
+        mView.onItemDeleted();
     }
 
     @Override
     public void onError(String message) {
-        mDeleteView.onError(message);
+        mView.onError(message);
     }
 }

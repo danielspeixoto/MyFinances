@@ -12,26 +12,26 @@ import com.example.danielspeixoto.meufinanceiro.view.module.IInsertView;
 
 public class InsertTransactionPresenter implements IInsertPresenter<Transaction> {
 
-    private final IInsertView<Transaction> mInsertView;
-    private final IInsertModel<Transaction> mInsertModel;
+    private final IInsertView<Transaction> mView;
+    private final IInsertModel<Transaction> mModel;
 
-    public InsertTransactionPresenter(IInsertView<Transaction> mInsertView) {
-        this.mInsertView = mInsertView;
-        this.mInsertModel = new InsertTransactionModel(this);
+    public InsertTransactionPresenter(IInsertView<Transaction> mView) {
+        this.mView = mView;
+        this.mModel = new InsertTransactionModel(this);
     }
 
     @Override
     public void insert(Transaction Transaction) {
-        mInsertModel.insert(Transaction);
+        mModel.insert(Transaction);
     }
 
     @Override
     public void onInserted() {
-        mInsertView.onObjectInserted();
+        mView.onObjectInserted();
     }
 
     @Override
     public void onError(String message) {
-        mInsertView.onError(message);
+        mView.onError(message);
     }
 }

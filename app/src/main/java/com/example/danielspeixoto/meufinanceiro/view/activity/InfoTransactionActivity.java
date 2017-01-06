@@ -7,9 +7,7 @@ import android.widget.TextView;
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.presenter.DeleteTransactionPresenter;
 import com.example.danielspeixoto.meufinanceiro.presenter.SelectInstitutionPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.dialog.AreYouSureDialog;
 import com.example.danielspeixoto.meufinanceiro.view.module.IDeleteView;
 import com.example.danielspeixoto.meufinanceiro.view.module.ISelectView;
 
@@ -63,7 +61,6 @@ public class InfoTransactionActivity extends BaseActivity implements ISelectView
 
     @OnClick(R.id.deleteButton)
     public void delete() {
-        new AreYouSureDialog(() ->new DeleteTransactionPresenter(this).delete(mTransaction.getId())).show(getSupportFragmentManager(), AreYouSureDialog.TAG);
     }
 
     @Override
@@ -71,10 +68,4 @@ public class InfoTransactionActivity extends BaseActivity implements ISelectView
         showMessage("Transaction deleted");
         finish();
     }
-
-    @Override
-    public void onError(String message) {
-        showMessage(message);
-    }
-
 }
