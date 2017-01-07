@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
 import com.example.danielspeixoto.meufinanceiro.view.activity.InsertInstitutionActivity;
+import com.example.danielspeixoto.meufinanceiro.view.activity.PayedActivity;
 import com.example.danielspeixoto.meufinanceiro.view.activity.SearchPeriodActivity;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecyclerAdapter;
 
@@ -41,9 +42,13 @@ public class DrawerHolder extends BaseHolder {
             case SEARCH_PERIOD:
                 mActivity.goToActivity(SearchPeriodActivity.class);
                 break;
+            case PAYED:
+                mActivity.goToActivity(PayedActivity.class);
         }
     }
 
     private static final int NEW_INSTITUTION = 0;
-    public static final int SEARCH_PERIOD = 1;
+    private static final int SEARCH_PERIOD = 1;
+    private static final int PAYED = 2;
+
 }

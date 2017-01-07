@@ -7,7 +7,6 @@ import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -23,10 +22,7 @@ public abstract class DataInstitutionActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_institution_data);
-        ButterKnife.bind(this);
-        setUpToolbar();
+        super.onCreate(savedInstanceState, R.layout.activity_institution_data);
     }
 
     @OnClick(R.id.fab)

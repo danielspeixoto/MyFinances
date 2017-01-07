@@ -1,6 +1,6 @@
 package com.example.danielspeixoto.meufinanceiro.model;
 
-import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
+import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

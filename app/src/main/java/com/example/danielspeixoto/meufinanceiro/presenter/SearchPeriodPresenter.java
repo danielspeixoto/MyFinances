@@ -3,7 +3,8 @@ package com.example.danielspeixoto.meufinanceiro.presenter;
 import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.SearchInPeriod;
-import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
+import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
+import com.example.danielspeixoto.meufinanceiro.util.DateString;
 
 import java.util.ArrayList;
 
@@ -16,13 +17,13 @@ import rx.Subscriber;
 public class SearchPeriodPresenter implements SearchInPeriod.Presenter {
 
     private final SearchInPeriod.View mView;
-    private CRUDTransactions mCrud;
+    private CRUDTransactions mCRUD;
     private ArrayList<Transaction> mItems = new ArrayList<>();
 
     public SearchPeriodPresenter(SearchInPeriod.View mView) {
         this.mView = mView;
         try {
-            mCrud = new CRUDTransactions();
+            mCRUD = new CRUDTransactions();
         } catch (NoUserException e) {
             e.printStackTrace();
         }
@@ -31,8 +32,9 @@ public class SearchPeriodPresenter implements SearchInPeriod.Presenter {
     @Override
     public void search(String startDate, String endDate) {
         mItems.clear();
-        mCrud.selectInPeriod(startDate, endDate).subscribe(new Subscriber<Transaction>() {
+        mCRUD.selectAll().subscribe(new Subscriber<Transaction>() {
 
+            String expirationDate;
             double amount = 0;
 
             @Override
@@ -47,10 +49,14 @@ public class SearchPeriodPresenter implements SearchInPeriod.Presenter {
 
             @Override
             public void onNext(Transaction transaction) {
-                mView.addItem(transaction);
-                mItems.add(transaction);
-                amount += transaction.isDebt() ? transaction.getAmount() * -1 : transaction.getAmount() ;
-                mView.setAmountOfMoney(amount);
+                expirationDate = transaction.getExpirationDate();
+                if(DateString.compareDates(expirationDate, startDate) <= 0 &&
+                        DateString.compareDates(expirationDate, endDate) >= 0) {
+                    mView.addItem(transaction);
+                    mItems.add(transaction);
+                    amount += transaction.isDebt() ? transaction.getAmount() * -1 : transaction.getAmount() ;
+                    mView.setAmountOfMoney(amount);
+                }
             }
         });
     }

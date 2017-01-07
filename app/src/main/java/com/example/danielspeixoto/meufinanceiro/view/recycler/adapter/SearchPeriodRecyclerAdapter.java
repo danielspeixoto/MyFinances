@@ -21,6 +21,7 @@ public class SearchPeriodRecyclerAdapter extends TransactionsRecyclerAdapter imp
         mPresenter = new SearchPeriodPresenter(this);
     }
 
+    //TODO Is that the best option to handle the amount?
     @Override
     public void setAmountOfMoney(double amountOfMoney) {
         mView.onAmountReceived(amountOfMoney);

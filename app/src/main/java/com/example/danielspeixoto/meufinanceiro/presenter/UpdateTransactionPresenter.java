@@ -5,7 +5,7 @@ import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.UpdateTransaction;
-import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
+import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
 import com.example.danielspeixoto.meufinanceiro.util.Repeated;
 
 import rx.Subscriber;
@@ -17,12 +17,14 @@ import rx.Subscriber;
 public class UpdateTransactionPresenter implements UpdateTransaction.Presenter<Transaction> {
 
     private final UpdateTransaction.View<Transaction> mView;
-    CRUDTransactions mCRUDTransactions;
+    private CRUDTransactions mCRUD;
+    private CRUDInstitutions mCRUDInstitutions;
 
     public UpdateTransactionPresenter(UpdateTransaction.View<Transaction> mView) {
         this.mView = mView;
         try {
-            mCRUDTransactions = new CRUDTransactions();
+            mCRUD = new CRUDTransactions();
+            mCRUDInstitutions = new CRUDInstitutions();
         } catch (NoUserException e) {
             e.printStackTrace();
         }
@@ -30,22 +32,21 @@ public class UpdateTransactionPresenter implements UpdateTransaction.Presenter<T
 
     @Override
     public void update(Transaction Transaction) {
-        mCRUDTransactions.update(Transaction);
+        mCRUD.update(Transaction);
         mView.getActivity().showMessage("Transaction updated");
         mView.getActivity().finish();
     }
 
     @Override
     public void update(Transaction transaction, int amount, int frequency) {
-        mCRUDTransactions.delete(transaction.getGroup(), transaction.getId());
-        mCRUDTransactions.insert(Repeated.generateTransactions(transaction, amount, frequency));
+        mCRUD.delete(transaction);
+        mCRUD.insert(Repeated.generateTransactions(transaction, amount, frequency));
         mView.getActivity().showMessage("Transactions updated");
     }
 
     @Override
     public void selectInstitutions(String id) {
-        try {
-            new CRUDInstitutions().selectAll().subscribe(new Subscriber<Institution>() {
+        mCRUDInstitutions.selectAll().subscribe(new Subscriber<Institution>() {
                 int counter = 0;
                 @Override
                 public void onCompleted() {
@@ -66,8 +67,5 @@ public class UpdateTransactionPresenter implements UpdateTransaction.Presenter<T
                     counter++;
                 }
             });
-        } catch (NoUserException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -6,17 +6,17 @@ import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
  * Created by danielspeixoto on 1/7/17.
  */
 
-public class DeleteTransaction {
+public class TransactionSource {
 
-    public interface View extends Base.View{
+    public interface View extends Base.View {
+
+        void addItem(Transaction transaction);
 
     }
 
     public interface Presenter extends Base.Presenter {
 
-        void delete(String id);
-
-        void delete(Transaction transaction);
+        void selectAll();
 
     }
 }

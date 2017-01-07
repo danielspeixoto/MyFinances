@@ -1,4 +1,4 @@
-package com.example.danielspeixoto.meufinanceiro.util;
+package com.example.danielspeixoto.meufinanceiro.helper;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

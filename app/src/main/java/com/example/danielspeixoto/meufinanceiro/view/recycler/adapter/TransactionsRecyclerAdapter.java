@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
+import com.example.danielspeixoto.meufinanceiro.presenter.TogglePayedPresenter;
 import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.holder.TransactionHolder;
 
@@ -15,9 +16,9 @@ import java.util.Collections;
  * Created by danielspeixoto on 1/7/17.
  */
 
-public abstract class TransactionsRecyclerAdapter extends BaseRecyclerAdapter<Transaction> {
+public abstract class TransactionsRecyclerAdapter extends BaseRecyclerAdapter<Transaction> implements com.example.danielspeixoto.meufinanceiro.module.TogglePayed.View {
 
-    public TransactionsRecyclerAdapter(BaseActivity activity) {
+    TransactionsRecyclerAdapter(BaseActivity activity) {
         super(activity);
     }
 
@@ -39,4 +40,11 @@ public abstract class TransactionsRecyclerAdapter extends BaseRecyclerAdapter<Tr
         Collections.sort(data);
         notifyDataSetChanged();
     }
+
+    public void togglePayed(int position) {
+        new TogglePayedPresenter(this).toggle(data.get(position));
+        data.remove(position);
+        notifyItemRemoved(position);
+    }
+
 }

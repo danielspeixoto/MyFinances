@@ -9,16 +9,15 @@ import android.widget.TextView;
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.module.CRUD;
 import com.example.danielspeixoto.meufinanceiro.module.DeleteTransaction;
+import com.example.danielspeixoto.meufinanceiro.module.SelectInstitution;
 import com.example.danielspeixoto.meufinanceiro.presenter.DeleteTransactionPresenter;
 import com.example.danielspeixoto.meufinanceiro.presenter.SelectInstitutionPresenter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class InfoTransactionActivity extends BaseActivity implements CRUD.Select.View<Institution>, DeleteTransaction.View {
+public class InfoTransactionActivity extends BaseActivity implements SelectInstitution.View, DeleteTransaction.View {
 
     Transaction mTransaction;
 
@@ -39,9 +38,7 @@ public class InfoTransactionActivity extends BaseActivity implements CRUD.Select
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
-        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState, R.layout.activity_info);
         mTransaction = getIntent().getParcelableExtra(Transaction.class.getSimpleName());
         if(!mTransaction.getGroup().equals("General")) {
             deleteAllButton.setVisibility(View.VISIBLE);
@@ -69,7 +66,7 @@ public class InfoTransactionActivity extends BaseActivity implements CRUD.Select
 
     @OnClick(R.id.deleteButton)
     public void delete() {
-        new DeleteTransactionPresenter(this).delete(mTransaction.getGroup(), mTransaction.getId());
+        new DeleteTransactionPresenter(this).delete(mTransaction);
     }
 
     @OnClick(R.id.deleteAllButton)

@@ -20,7 +20,6 @@ import com.example.danielspeixoto.meufinanceiro.view.custom.FrequencySpinner;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -58,10 +57,7 @@ public abstract class DataTransactionActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_data);
-        ButterKnife.bind(this);
-        setUpToolbar();
+        super.onCreate(savedInstanceState, R.layout.activity_transaction_data);
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, institutions);
         institutionSpinner.setAdapter(mAdapter);
     }

@@ -18,6 +18,7 @@ public class DrawerRecyclerAdapter extends BaseRecyclerAdapter {
         super(activity);
         addItem("Create new Institution");
         addItem("Search in a period");
+        addItem("Payed");
     }
 
     @Override

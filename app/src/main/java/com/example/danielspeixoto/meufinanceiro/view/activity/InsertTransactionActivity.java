@@ -3,13 +3,12 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 import android.os.Bundle;
 
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Frequency;
-import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
-import com.example.danielspeixoto.meufinanceiro.module.CRUD;
 import com.example.danielspeixoto.meufinanceiro.module.InsertTransaction;
+import com.example.danielspeixoto.meufinanceiro.module.InstitutionSource;
 import com.example.danielspeixoto.meufinanceiro.presenter.AllInstitutionsPresenter;
 import com.example.danielspeixoto.meufinanceiro.presenter.InsertTransactionPresenter;
 
-public class InsertTransactionActivity extends DataTransactionActivity implements InsertTransaction.View, CRUD.All.View<Institution> {
+public class InsertTransactionActivity extends DataTransactionActivity implements InsertTransaction.View, InstitutionSource.View {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

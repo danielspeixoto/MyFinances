@@ -1,9 +1,9 @@
 package com.example.danielspeixoto.meufinanceiro.presenter;
 
+import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
 import com.example.danielspeixoto.meufinanceiro.model.CRUDInstitutions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
-import com.example.danielspeixoto.meufinanceiro.module.CRUD;
-import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
+import com.example.danielspeixoto.meufinanceiro.module.InstitutionSource;
 
 import rx.Subscriber;
 
@@ -11,18 +11,23 @@ import rx.Subscriber;
  * Created by danielspeixoto on 1/5/17.
  */
 
-public class AllInstitutionsPresenter implements CRUD.All.Presenter<Institution> {
+public class AllInstitutionsPresenter implements InstitutionSource.Presenter {
 
-    private CRUD.All.View<Institution> mView;
+    private InstitutionSource.View mView;
+    private CRUDInstitutions mCRUD;
 
-    public AllInstitutionsPresenter(CRUD.All.View mView) {
+    public AllInstitutionsPresenter(InstitutionSource.View mView) {
         this.mView = mView;
+        try {
+            mCRUD = new CRUDInstitutions();
+        } catch (NoUserException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void selectAll() {
-        try {
-            new CRUDInstitutions().selectAll().subscribe(new Subscriber<Institution>() {
+        mCRUD.selectAll().subscribe(new Subscriber<Institution>() {
                 @Override
                 public void onCompleted() {
 
@@ -38,8 +43,5 @@ public class AllInstitutionsPresenter implements CRUD.All.Presenter<Institution>
                     mView.addItem(institution);
                 }
             });
-        } catch (NoUserException e) {
-            e.printStackTrace();
-        }
     }
 }

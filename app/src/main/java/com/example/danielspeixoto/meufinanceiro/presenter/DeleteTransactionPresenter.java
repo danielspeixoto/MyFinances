@@ -1,8 +1,9 @@
 package com.example.danielspeixoto.meufinanceiro.presenter;
 
+import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
 import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
+import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.DeleteTransaction;
-import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
 import com.example.danielspeixoto.meufinanceiro.view.dialog.AreYouSureDialog;
 
 /**
@@ -12,12 +13,12 @@ import com.example.danielspeixoto.meufinanceiro.view.dialog.AreYouSureDialog;
 public class DeleteTransactionPresenter implements DeleteTransaction.Presenter {
 
     private DeleteTransaction.View mView;
-    private CRUDTransactions mCRUDTransactions;
+    private CRUDTransactions mCRUD;
 
     public DeleteTransactionPresenter(DeleteTransaction.View mView) {
         this.mView = mView;
         try {
-            mCRUDTransactions = new CRUDTransactions();
+            mCRUD = new CRUDTransactions();
         } catch (NoUserException e) {
             e.printStackTrace();
         }
@@ -26,16 +27,16 @@ public class DeleteTransactionPresenter implements DeleteTransaction.Presenter {
     @Override
     public void delete(String id) {
         new AreYouSureDialog(() -> {
-            mCRUDTransactions.delete(id);
+            mCRUD.delete(id);
             mView.getActivity().showMessage("All Transactions deleted");
             mView.getActivity().finish();
         }).show(mView.getActivity().getSupportFragmentManager(), AreYouSureDialog.TAG);
     }
 
     @Override
-    public void delete(String groupId, String id) {
+    public void delete(Transaction transaction) {
         new AreYouSureDialog(() -> {
-            mCRUDTransactions.delete(groupId, id);
+            mCRUD.delete(transaction);
             mView.getActivity().showMessage("Transaction deleted");
             mView.getActivity().finish();
         }).show(mView.getActivity().getSupportFragmentManager(), AreYouSureDialog.TAG);

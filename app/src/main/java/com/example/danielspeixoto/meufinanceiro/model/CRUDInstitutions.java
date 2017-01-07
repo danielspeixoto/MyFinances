@@ -1,8 +1,8 @@
 package com.example.danielspeixoto.meufinanceiro.model;
 
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
-import com.example.danielspeixoto.meufinanceiro.util.ChildAddedListener;
-import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
+import com.example.danielspeixoto.meufinanceiro.helper.ChildAddedListener;
+import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;

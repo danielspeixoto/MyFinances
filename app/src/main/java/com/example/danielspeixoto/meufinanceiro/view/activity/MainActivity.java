@@ -13,18 +13,14 @@ import android.view.MenuItem;
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.module.Logout;
 import com.example.danielspeixoto.meufinanceiro.presenter.LogoutPresenter;
-import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecyclerAdapter;
+import com.example.danielspeixoto.meufinanceiro.presenter.UnPayedPresenter;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.DrawerRecyclerAdapter;
-import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.AllTransactionsRecyclerAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements Logout.View {
+public class MainActivity extends SourceActivity implements Logout.View {
 
-    protected BaseRecyclerAdapter mAdapter;
-    protected RecyclerView list;
     @BindView(R.id.drawer)
     RecyclerView drawer;
     @BindView(R.id.drawer_layout)
@@ -33,29 +29,16 @@ public class MainActivity extends BaseActivity implements Logout.View {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState, R.layout.activity_main, new UnPayedPresenter(mAdapter));
         drawer.setAdapter(new DrawerRecyclerAdapter(this));
         drawer.setLayoutManager(new LinearLayoutManager(this));
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.accept, R.string.decline);
         drawerLayout.addDrawerListener(drawerToggle);
-        setUpToolbar();
-        mAdapter = new AllTransactionsRecyclerAdapter(this);
-        list = ButterKnife.findById(this, R.id.recentList);
-        list.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        list.setAdapter(mAdapter);
     }
 
     @OnClick(R.id.fab)
     public void insertTransaction() {
         goToActivity(InsertTransactionActivity.class);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mAdapter.refreshData();
     }
 
     @Override

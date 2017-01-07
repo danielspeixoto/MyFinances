@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.example.danielspeixoto.meufinanceiro.R;
+import com.example.danielspeixoto.meufinanceiro.helper.SwipeHelper;
 import com.example.danielspeixoto.meufinanceiro.module.DateGetter;
 import com.example.danielspeixoto.meufinanceiro.module.UpdateAmount;
 import com.example.danielspeixoto.meufinanceiro.util.DateString;
@@ -14,7 +15,6 @@ import com.example.danielspeixoto.meufinanceiro.view.dialog.DateDialog;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.SearchPeriodRecyclerAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SearchPeriodActivity extends BaseActivity implements UpdateAmount.View {
@@ -31,16 +31,22 @@ public class SearchPeriodActivity extends BaseActivity implements UpdateAmount.V
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_period);
-        ButterKnife.bind(this);
-        setUpToolbar();
+        super.onCreate(savedInstanceState, R.layout.activity_search_period);
         String today = DateString.getToday();
         start_text.setText(today);
         end_text.setText(today);
         mAdapter = new SearchPeriodRecyclerAdapter(this, this);
         searchList.setAdapter(mAdapter);
         searchList.setLayoutManager(new LinearLayoutManager(this));
+        new SwipeHelper((viewHolder, direction) -> {
+            switch (direction) {
+                case SwipeHelper.RIGHT:
+                    mAdapter.togglePayed(viewHolder.getLayoutPosition());
+                    break;
+                case SwipeHelper.LEFT:
+                    break;
+            }
+        }).attachToRecyclerView(searchList  );
     }
 
     @OnClick(R.id.fab)
