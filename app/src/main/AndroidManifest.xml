@@ -48,7 +48,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.danielspeixoto.meufinanceiro.view.activity.MainActivity" />
         </activity>
-        <activity android:name=".view.activity.InfoTransactionActivity"></activity>
+        <activity android:name=".view.activity.InfoTransactionActivity" />
+        <activity
+            android:name=".view.activity.SearchPeriodActivity"
+            android:label="@string/title_activity_search_period"
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.danielspeixoto.meufinanceiro.view.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

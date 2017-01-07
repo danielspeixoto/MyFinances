@@ -57,5 +57,4 @@ public class DateString {
         return Convert.calendarToString(calendar);
     }
 
-
 }

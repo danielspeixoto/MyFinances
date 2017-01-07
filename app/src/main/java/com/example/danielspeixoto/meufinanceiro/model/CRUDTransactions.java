@@ -1,11 +1,12 @@
 package com.example.danielspeixoto.meufinanceiro.model;
 
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
+import com.example.danielspeixoto.meufinanceiro.util.ChildAddedListener;
+import com.example.danielspeixoto.meufinanceiro.util.DateString;
+import com.example.danielspeixoto.meufinanceiro.util.GroupOfChildrenListener;
+import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -18,64 +19,25 @@ import rx.Subscriber;
 
 public class CRUDTransactions extends CRUD {
 
-    public CRUDTransactions() {
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Transaction.class.getSimpleName());
+    public CRUDTransactions() throws NoUserException {
+        super();
+        mDatabase = mDatabase.child(Transaction.class.getSimpleName());
     }
 
     public Observable<Transaction> selectAll() {
-        //TODO look inside each group
-        return Observable.create(new Observable.OnSubscribe<Transaction>() {
-            @Override
-            public void call(final Subscriber<? super Transaction> subscriber) {
-                mDatabase.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        mDatabase.child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                subscriber.onNext(dataSnapshot.getValue(Transaction.class));
-                            }
+        return Observable.create(subscriber -> {
+            mDatabase.addChildEventListener(new GroupOfChildrenListener(new ChildAddedListener.Actions() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    subscriber.onNext(dataSnapshot.getValue(Transaction.class));
+                }
 
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        subscriber.onError(new Throwable(databaseError.getMessage()));
-                    }
-                });
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    subscriber.onError(new Throwable(databaseError.getMessage()));
+                    subscriber.onCompleted();
+                }
+            }));
         });
     }
 
@@ -100,5 +62,34 @@ public class CRUDTransactions extends CRUD {
 
     public void delete(String groupId, String id) {
         mDatabase.child(groupId).child(id).removeValue();
+    }
+
+    public Observable<Transaction> selectInPeriod(String startDate, String endDate) {
+        return Observable.create(subscriber -> {
+            selectAll().subscribe(new Subscriber<Transaction>() {
+
+                String expirationDate;
+
+                @Override
+                public void onCompleted() {
+                    subscriber.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    subscriber.onError(e);
+                }
+
+                @Override
+                public void onNext(Transaction transaction) {
+                    expirationDate = transaction.getExpirationDate();
+                    if(DateString.compareDates(expirationDate, startDate) <= 0 &&
+                            DateString.compareDates(expirationDate, endDate) >= 0) {
+                        subscriber.onNext(transaction);
+                    }
+                }
+            });
+        });
+
     }
 }

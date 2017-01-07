@@ -1,11 +1,12 @@
 package com.example.danielspeixoto.meufinanceiro.view.recycler.holder;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.danielspeixoto.meufinanceiro.R;
+import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
 import com.example.danielspeixoto.meufinanceiro.view.activity.InsertInstitutionActivity;
+import com.example.danielspeixoto.meufinanceiro.view.activity.SearchPeriodActivity;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
@@ -24,17 +25,25 @@ public class DrawerHolder extends BaseHolder {
     TextView drawerText;
     @Setter
     protected int index;
+    private final BaseActivity mActivity;
 
     public DrawerHolder(View itemView, BaseRecyclerAdapter mAdapter) {
         super(itemView, mAdapter);
+        mActivity = mAdapter.getActivity();
     }
 
     @OnClick(R.id.drawer_item)
     public void itemClicked() {
         switch (index) {
-            case 0:
-                mAdapter.getActivity().startActivity(new Intent(mAdapter.getActivity(), InsertInstitutionActivity.class));
+            case NEW_INSTITUTION:
+                mActivity.goToActivity(InsertInstitutionActivity.class);
+                break;
+            case SEARCH_PERIOD:
+                mActivity.goToActivity(SearchPeriodActivity.class);
                 break;
         }
     }
+
+    private static final int NEW_INSTITUTION = 0;
+    public static final int SEARCH_PERIOD = 1;
 }

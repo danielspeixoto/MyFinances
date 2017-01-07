@@ -3,6 +3,7 @@ package com.example.danielspeixoto.meufinanceiro.presenter;
 import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.CRUD;
+import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
 
 import rx.Subscriber;
 
@@ -20,21 +21,25 @@ public class AllTransactionsPresenter implements CRUD.All.Presenter<Transaction>
 
     @Override
     public void selectAll() {
-        new CRUDTransactions().selectAll().subscribe(new Subscriber<Transaction>() {
-            @Override
-            public void onCompleted() {
+        try {
+            new CRUDTransactions().selectAll().subscribe(new Subscriber<Transaction>() {
+                @Override
+                public void onCompleted() {
 
-            }
+                }
 
-            @Override
-            public void onError(Throwable e) {
+                @Override
+                public void onError(Throwable e) {
 
-            }
+                }
 
-            @Override
-            public void onNext(Transaction transaction) {
-                mView.addItem(transaction);
-            }
-        });
+                @Override
+                public void onNext(Transaction transaction) {
+                    mView.addItem(transaction);
+                }
+            });
+        } catch (NoUserException e) {
+            e.printStackTrace();
+        }
     }
 }
