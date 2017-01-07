@@ -6,27 +6,25 @@ import android.view.ViewGroup;
 
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.presenter.AllTransactionsPresenter;
 import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.holder.TransactionHolder;
 
 import java.util.Collections;
 
 /**
- * Created by danielspeixoto on 1/4/17.
+ * Created by danielspeixoto on 1/7/17.
  */
 
-public class TransactionRecyclerAdapter extends AllRecyclerAdapter {
+public abstract class TransactionsRecyclerAdapter extends BaseRecyclerAdapter<Transaction> {
 
-    public TransactionRecyclerAdapter(BaseActivity activity) {
+    public TransactionsRecyclerAdapter(BaseActivity activity) {
         super(activity);
-        mSelectAllPresenter = new AllTransactionsPresenter(this);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         TransactionHolder transactionHolder = (TransactionHolder) holder;
-        transactionHolder.setTransaction((Transaction) data.get(position));
+        transactionHolder.setTransaction(data.get(position));
         transactionHolder.onPostCreated();
     }
 
@@ -36,8 +34,8 @@ public class TransactionRecyclerAdapter extends AllRecyclerAdapter {
     }
 
     @Override
-    public void addItem(Object object) {
-        data.add(object);
+    public void addItem(Transaction transaction) {
+        data.add(transaction);
         Collections.sort(data);
         notifyDataSetChanged();
     }

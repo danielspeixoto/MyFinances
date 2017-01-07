@@ -30,12 +30,14 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTransaction = getIntent().getParcelableExtra(Transaction.class.getSimpleName());
+        mPresenter = new UpdateTransactionPresenter(this);
+        mPresenter.selectInstitutions(mTransaction.getInstitutionId());
         if(!mTransaction.getGroup().equals("General")) {
             // Only transactions in general can edit their repeatability
             frequencyLinear.setVisibility(View.GONE);
         }
         nameEdit.setText(mTransaction.getName());
-        amountEdit.setText(Long.toString(mTransaction.getAmount()));
+        amountEdit.setText(Double.toString(mTransaction.getAmount()));
         DateString dateString = new DateString(mTransaction.getLaunchedDate());
         launchedDate.updateDate(dateString.stringToYear(), dateString.stringToMonth(), dateString.stringToDay());
         dateString.setDate(mTransaction.getExpirationDate());
@@ -46,7 +48,6 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
         } else {
             creditButton.toggle();
         }
-        mPresenter = new UpdateTransactionPresenter(this);
     }
 
     @Override

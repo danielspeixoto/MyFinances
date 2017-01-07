@@ -3,7 +3,6 @@ package com.example.danielspeixoto.meufinanceiro.view.recycler.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.example.danielspeixoto.meufinanceiro.module.CRUD;
 import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -14,22 +13,20 @@ import lombok.Setter;
 /**
  * Created by danielspeixoto on 17/11/16.
  */
-public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements CRUD.All.View {
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Getter
     protected BaseActivity activity;
     @Getter
     @Setter
-    protected ArrayList data = new ArrayList<>();
+    protected ArrayList<T> data = new ArrayList<>();
 
     public BaseRecyclerAdapter(BaseActivity activity) {
         this.activity = activity;
     }
 
-    @Override
-    public void addItem(Object object) {
-        data.add(object);
+    public void addItem(T t) {
+        data.add(t);
         notifyDataSetChanged();
     }
 
@@ -46,7 +43,6 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         return data.size();
     }
 
-    @Override
     public void goToActivity(Class clazz) {
         getActivity().goToActivity(clazz);
     }

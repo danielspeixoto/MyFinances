@@ -82,7 +82,7 @@ public abstract class DataTransactionActivity extends BaseActivity {
 
     @OnClick(R.id.fab)
     protected void save() {
-        mTransaction.setAmount(Long.valueOf(amountEdit.getText().toString()));
+        mTransaction.setAmount(Double.valueOf(amountEdit.getText().toString()));
         mTransaction.setName(nameEdit.getText().toString());
         mTransaction.setLaunchedDate(Convert.dateToString(launchedDate));
         mTransaction.setExpirationDate(Convert.dateToString(expirationDate));

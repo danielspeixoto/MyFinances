@@ -15,7 +15,7 @@ import com.example.danielspeixoto.meufinanceiro.module.Logout;
 import com.example.danielspeixoto.meufinanceiro.presenter.LogoutPresenter;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecyclerAdapter;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.DrawerRecyclerAdapter;
-import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.TransactionRecyclerAdapter;
+import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.AllTransactionsRecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements Logout.View {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.accept, R.string.decline);
         drawerLayout.addDrawerListener(drawerToggle);
         setUpToolbar();
-        mAdapter = new TransactionRecyclerAdapter(this);
+        mAdapter = new AllTransactionsRecyclerAdapter(this);
         list = ButterKnife.findById(this, R.id.recentList);
         list.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         list.setAdapter(mAdapter);

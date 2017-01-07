@@ -17,6 +17,7 @@ public class DrawerRecyclerAdapter extends BaseRecyclerAdapter {
     public DrawerRecyclerAdapter(BaseActivity activity) {
         super(activity);
         addItem("Create new Institution");
+        addItem("Search in a period");
     }
 
     @Override

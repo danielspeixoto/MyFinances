@@ -47,7 +47,7 @@ public class InfoTransactionActivity extends BaseActivity implements CRUD.Select
             deleteAllButton.setVisibility(View.VISIBLE);
         }
         nameText.setText(mTransaction.getName());
-        amountText.setText(Long.toString(mTransaction.getAmount()));
+        amountText.setText(Double.toString(mTransaction.getAmount()));
         launchedDateText.setText(mTransaction.getLaunchedDate());
         expirationDateText.setText(mTransaction.getExpirationDate());
         commentsText.setText(mTransaction.getComments());

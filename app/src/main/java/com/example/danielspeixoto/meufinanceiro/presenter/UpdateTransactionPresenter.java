@@ -5,6 +5,7 @@ import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.UpdateTransaction;
+import com.example.danielspeixoto.meufinanceiro.util.NoUserException;
 import com.example.danielspeixoto.meufinanceiro.util.Repeated;
 
 import rx.Subscriber;
@@ -20,7 +21,11 @@ public class UpdateTransactionPresenter implements UpdateTransaction.Presenter<T
 
     public UpdateTransactionPresenter(UpdateTransaction.View<Transaction> mView) {
         this.mView = mView;
-        mCRUDTransactions = new CRUDTransactions();
+        try {
+            mCRUDTransactions = new CRUDTransactions();
+        } catch (NoUserException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -39,26 +44,30 @@ public class UpdateTransactionPresenter implements UpdateTransaction.Presenter<T
 
     @Override
     public void selectInstitutions(String id) {
-        new CRUDInstitutions().selectAll().subscribe(new Subscriber<Institution>() {
-            int counter = 0;
-            @Override
-            public void onCompleted() {
+        try {
+            new CRUDInstitutions().selectAll().subscribe(new Subscriber<Institution>() {
+                int counter = 0;
+                @Override
+                public void onCompleted() {
 
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Institution institution) {
-                mView.addItem(institution);
-                if(institution.getId().equals(id)) {
-                    mView.setRelatedItemIndex(counter);
                 }
-                counter++;
-            }
-        });
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(Institution institution) {
+                    mView.addItem(institution);
+                    if(institution.getId().equals(id)) {
+                        mView.setRelatedItemIndex(counter);
+                    }
+                    counter++;
+                }
+            });
+        } catch (NoUserException e) {
+            e.printStackTrace();
+        }
     }
 }
