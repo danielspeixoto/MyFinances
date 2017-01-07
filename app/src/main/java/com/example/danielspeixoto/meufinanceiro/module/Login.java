@@ -8,6 +8,9 @@ import android.content.Intent;
 
 public class Login {
 
+    public interface View extends Base.View {
+    }
+
     public interface Presenter extends Base.Presenter {
         int RC_SIGN_IN = 123;
         void logIn();
@@ -15,6 +18,4 @@ public class Login {
         void onActivityResult(Intent data);
     }
 
-    public interface View extends Base.View {
-    }
 }

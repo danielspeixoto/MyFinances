@@ -20,11 +20,25 @@ public class Transaction implements Comparable<Transaction>, Parcelable {
     private String launchedDate; // Dia em que a conta foi criada
     private String expirationDate;
     private String comments;
+    private String group;
     private boolean isPayed;
     private boolean isDebt;
 
     public Transaction() {
     }
+
+    public Transaction(Transaction otherTransaction) {
+        id = otherTransaction.getId();
+        institutionId = otherTransaction.getInstitutionId();
+        name = otherTransaction.getName();
+        amount = otherTransaction.getAmount();
+        launchedDate = otherTransaction.getLaunchedDate();
+        expirationDate = otherTransaction.getExpirationDate();
+        comments = otherTransaction.getComments();
+        isPayed = otherTransaction.isPayed();
+        isDebt = otherTransaction.isDebt();
+    }
+
 
     protected Transaction(Parcel in) {
         id = in.readString();
@@ -34,6 +48,7 @@ public class Transaction implements Comparable<Transaction>, Parcelable {
         launchedDate = in.readString();
         expirationDate = in.readString();
         comments = in.readString();
+        group = in.readString();
         isPayed = in.readByte() != 0;
         isDebt = in.readByte() != 0;
     }
@@ -47,6 +62,7 @@ public class Transaction implements Comparable<Transaction>, Parcelable {
         dest.writeString(launchedDate);
         dest.writeString(expirationDate);
         dest.writeString(comments);
+        dest.writeString(group);
         dest.writeByte((byte) (isPayed ? 1 : 0));
         dest.writeByte((byte) (isDebt ? 1 : 0));
     }

@@ -40,25 +40,28 @@ public class TransactionHolder extends ItemHolder {
 
     public void onPostCreated() {
         setId(transaction.getId());
-        getAmountText().setText("$" + transaction.getAmount());
+        String amount = "+";
+        if(transaction.isDebt()) {
+            nameText.setTextColor(Color.RED);
+            amountText.setTextColor(Color.RED);
+            expirationText.setTextColor(Color.RED);
+            amount = "-";
+        }
+        if(!transaction.getExpirationDate().equals(DateString.getToday())) {
+            nameText.setTextColor(Color.BLACK);
+            amountText.setTextColor(Color.BLACK);
+            expirationText.setTextColor(Color.BLACK);
+        }
+        amount += "$" + transaction.getAmount();
+        getAmountText().setText(amount);
         getNameText().setText(transaction.getName());
         getExpirationText().setText(transaction.getExpirationDate());
-        if(transaction.getExpirationDate().equals(DateString.getToday())) {
-            nameText.setTextColor(Color.rgb(0, 128, 0));
-            amountText.setTextColor(Color.rgb(0, 128, 0));
-            expirationText.setTextColor(Color.rgb(0, 128, 0));
-            if(transaction.isDebt()) {
-                nameText.setTextColor(Color.RED);
-                amountText.setTextColor(Color.RED);
-                expirationText.setTextColor(Color.RED);
-            }
-        }
     }
 
     @OnClick(R.id.cardItem)
     public void itemClicked() {
         Intent intent = new Intent(mAdapter.getActivity(), InfoTransactionActivity.class);
-        intent.putExtra(Transaction.class.getSimpleName(), (Transaction) getSelf());
+        intent.putExtra(Transaction.class.getSimpleName(), transaction);
         mAdapter.getActivity().startActivity(intent);
     }
 }

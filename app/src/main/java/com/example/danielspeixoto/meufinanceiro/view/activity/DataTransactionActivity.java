@@ -2,9 +2,12 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -12,6 +15,7 @@ import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.util.Convert;
+import com.example.danielspeixoto.meufinanceiro.view.custom.FrequencySpinner;
 
 import java.util.ArrayList;
 
@@ -43,6 +47,14 @@ public abstract class DataTransactionActivity extends BaseActivity {
     DatePicker launchedDate;
     @BindView(R.id.expirationDate)
     DatePicker expirationDate;
+    @BindView(R.id.frequencyGrid)
+    GridLayout frequencyGrid;
+    @BindView(R.id.repeatsCheck)
+    CheckBox repeatsCheck;
+    @BindView(R.id.numberOfTimes)
+    EditText numberOfTimes;
+    @BindView(R.id.frequencySpinner)
+    FrequencySpinner frequencySpinner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +69,15 @@ public abstract class DataTransactionActivity extends BaseActivity {
     public void addItem(Institution institution) {
         institutions.add(institution);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.repeatsCheck)
+    public void toggleGridLayout() {
+        if(repeatsCheck.isChecked()) {
+            frequencyGrid.setVisibility(View.VISIBLE);
+        } else {
+            frequencyGrid.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.fab)

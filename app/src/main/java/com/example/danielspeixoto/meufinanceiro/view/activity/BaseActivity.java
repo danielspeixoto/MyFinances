@@ -3,6 +3,7 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.danielspeixoto.meufinanceiro.R;
@@ -35,5 +36,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Base.Vie
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    protected boolean checkTextNotNull(EditText editText) {
+        return !editText.getText().toString().equals("");
     }
 }

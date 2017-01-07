@@ -2,13 +2,14 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 
 import android.os.Bundle;
 
+import com.example.danielspeixoto.meufinanceiro.model.pojo.Frequency;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
-import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.CRUD;
+import com.example.danielspeixoto.meufinanceiro.module.InsertTransaction;
 import com.example.danielspeixoto.meufinanceiro.presenter.AllInstitutionsPresenter;
 import com.example.danielspeixoto.meufinanceiro.presenter.InsertTransactionPresenter;
 
-public class InsertTransactionActivity extends DataTransactionActivity implements CRUD.Insert.View<Transaction>, CRUD.All.View<Institution> {
+public class InsertTransactionActivity extends DataTransactionActivity implements InsertTransaction.View, CRUD.All.View<Institution> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,10 @@ public class InsertTransactionActivity extends DataTransactionActivity implement
     @Override
     protected void save() {
         super.save();
-        new InsertTransactionPresenter(this).insert(mTransaction);
+        if(checkTextNotNull(numberOfTimes)) {
+            new InsertTransactionPresenter(this).insert(mTransaction, Integer.valueOf(numberOfTimes.getText().toString()), ((Frequency)frequencySpinner.getSelectedItem()).getValue());
+        } else {
+            new InsertTransactionPresenter(this).insert(mTransaction);
+        }
     }
 }

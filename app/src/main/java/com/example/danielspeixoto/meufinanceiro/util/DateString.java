@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class DateString {
 
+    final static int MONTHLY = -1;
+
     String date;
 
     public DateString(String date) {
@@ -41,11 +43,18 @@ public class DateString {
 
     public static String getToday() {
         Calendar calendar = Calendar.getInstance();
-        String date = "";
-        date += calendar.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + calendar.get(Calendar.DAY_OF_MONTH) : calendar.get(Calendar.DAY_OF_MONTH);
-        date += "/";
-        date += calendar.get(Calendar.MONTH) < 10 ? "0" + (calendar.get(Calendar.MONTH) + 1): (calendar.get(Calendar.MONTH) + 1);
-        return date + "/" + calendar.get(Calendar.YEAR);
+        return Convert.calendarToString(calendar);
+    }
+
+    public static String sumPeriod(String date, int period) {
+        Calendar calendar;
+        calendar = getCalendar(new DateString(date));
+        if(period == MONTHLY) {
+            calendar.add(Calendar.MONTH, 1);
+            return Convert.calendarToString(calendar);
+        }
+        calendar.add(Calendar.DATE, period);
+        return Convert.calendarToString(calendar);
     }
 
 

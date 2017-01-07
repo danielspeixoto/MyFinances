@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseReference;
 
 public abstract class CRUD {
 
-    protected DatabaseReference mDatabase;
+    DatabaseReference mDatabase;
 
     public void delete(String id) {
         mDatabase.child(id).removeValue();

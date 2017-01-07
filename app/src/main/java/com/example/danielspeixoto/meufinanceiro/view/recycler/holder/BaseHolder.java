@@ -6,15 +6,12 @@ import android.view.View;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecyclerAdapter;
 
 import butterknife.ButterKnife;
-import lombok.Setter;
 
 /**
  * Created by danielspeixoto on 20/11/16.
  */
 public abstract class BaseHolder extends RecyclerView.ViewHolder {
 
-    @Setter
-    protected int index;
     protected BaseRecyclerAdapter mAdapter;
 
     public BaseHolder(View itemView, BaseRecyclerAdapter mAdapter) {
@@ -22,11 +19,4 @@ public abstract class BaseHolder extends RecyclerView.ViewHolder {
         this.mAdapter = mAdapter;
         ButterKnife.bind(this, itemView);
     }
-
-    protected Object getSelf() {
-        return mAdapter.getData().get(index);
-    }
-
-
-
 }

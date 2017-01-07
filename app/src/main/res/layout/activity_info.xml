@@ -65,4 +65,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/deleteButton" />
 
+    <Button
+        android:text="Delete All"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/deleteAllButton"
+        android:visibility="gone" />
+
 </LinearLayout>

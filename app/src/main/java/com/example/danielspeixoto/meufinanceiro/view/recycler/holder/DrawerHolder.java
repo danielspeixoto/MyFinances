@@ -11,6 +11,7 @@ import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecycl
 import butterknife.BindView;
 import butterknife.OnClick;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by danielspeixoto on 05/12/16.
@@ -21,6 +22,8 @@ public class DrawerHolder extends BaseHolder {
     @BindView(R.id.drawer_text)
     @Getter
     TextView drawerText;
+    @Setter
+    protected int index;
 
     public DrawerHolder(View itemView, BaseRecyclerAdapter mAdapter) {
         super(itemView, mAdapter);
