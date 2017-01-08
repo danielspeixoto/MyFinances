@@ -38,7 +38,7 @@ public class CRUDInstitutions extends CRUD {
 
     public Observable<Institution> selectAll() {
         return Observable.create(subscriber -> {
-            mDatabase.orderByChild("name").addChildEventListener(new ChildAddedListener(new ChildAddedListener.Actions() {
+            mDatabase.orderByChild("description").addChildEventListener(new ChildAddedListener(new ChildAddedListener.Actions() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     subscriber.onNext(dataSnapshot.getValue(Institution.class));

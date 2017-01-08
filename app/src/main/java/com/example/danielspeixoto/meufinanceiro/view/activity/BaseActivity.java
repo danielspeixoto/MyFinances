@@ -9,14 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.danielspeixoto.meufinanceiro.R;
-import com.example.danielspeixoto.meufinanceiro.module.Base;
+import com.example.danielspeixoto.meufinanceiro.module.ActivityBase;
 
 import butterknife.ButterKnife;
 
 /**
  * Created by danielspeixoto on 13/11/16.
  */
-public abstract class BaseActivity extends AppCompatActivity implements Base.View {
+public abstract class BaseActivity extends AppCompatActivity implements ActivityBase.View {
 
     protected static final String EMPTY_STRING = "";
 

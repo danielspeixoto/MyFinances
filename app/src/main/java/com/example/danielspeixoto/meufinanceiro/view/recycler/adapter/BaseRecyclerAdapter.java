@@ -30,7 +30,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         notifyDataSetChanged();
     }
 
-    public abstract void refreshData();
+    public abstract void getItems();
 
     @Override
     public abstract void onBindViewHolder(RecyclerView.ViewHolder holder, int position);

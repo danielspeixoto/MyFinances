@@ -8,10 +8,10 @@ import android.content.Intent;
 
 public class Login {
 
-    public interface View extends Base.View {
+    public interface View extends ActivityBase.View {
     }
 
-    public interface Presenter extends Base.Presenter {
+    public interface Presenter extends ActivityBase.Presenter {
         int RC_SIGN_IN = 123;
         void logIn();
         void checkStatus();

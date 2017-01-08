@@ -2,8 +2,8 @@ package com.example.danielspeixoto.meufinanceiro.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.danielspeixoto.meufinanceiro.R;
@@ -15,39 +15,30 @@ import com.example.danielspeixoto.meufinanceiro.presenter.DeleteTransactionPrese
 import com.example.danielspeixoto.meufinanceiro.presenter.SelectInstitutionPresenter;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class InfoTransactionActivity extends BaseActivity implements SelectInstitution.View, DeleteTransaction.View {
 
     Transaction mTransaction;
 
-    @BindView(R.id.nameText)
-    TextView nameText;
+    @BindView(R.id.descriptionText)
+    TextView descriptionText;
     @BindView(R.id.amountText)
     TextView amountText;
     @BindView(R.id.launchedDateText)
     TextView launchedDateText;
     @BindView(R.id.expirationDateText)
     TextView expirationDateText;
-    @BindView(R.id.commentsText)
-    TextView commentsText;
     @BindView(R.id.institutionText)
     TextView institutionText;
-    @BindView(R.id.deleteAllButton)
-    Button deleteAllButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_info);
         mTransaction = getIntent().getParcelableExtra(Transaction.class.getSimpleName());
-        if(!mTransaction.getGroup().equals("General")) {
-            deleteAllButton.setVisibility(View.VISIBLE);
-        }
-        nameText.setText(mTransaction.getName());
+        descriptionText.setText(mTransaction.getDescription());
         amountText.setText(Double.toString(mTransaction.getAmount()));
         launchedDateText.setText(mTransaction.getLaunchedDate());
         expirationDateText.setText(mTransaction.getExpirationDate());
-        commentsText.setText(mTransaction.getComments());
         new SelectInstitutionPresenter(this).select(mTransaction.getInstitutionId());
     }
 
@@ -56,21 +47,31 @@ public class InfoTransactionActivity extends BaseActivity implements SelectInsti
         institutionText.setText(institution.getName());
     }
 
-    @OnClick(R.id.editButton)
-    public void update() {
-        Intent intent = new Intent(this, UpdateTransactionActivity.class);
-        intent.putExtra(Transaction.class.getSimpleName(), mTransaction);
-        startActivity(intent);
-        finish();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit_delete, menu);
+        if(!mTransaction.getGroup().equals("General")) {
+            menu.findItem(R.id.action_delete).setVisible(true);
+        }
+        return true;
     }
 
-    @OnClick(R.id.deleteButton)
-    public void delete() {
-        new DeleteTransactionPresenter(this).delete(mTransaction);
-    }
-
-    @OnClick(R.id.deleteAllButton)
-    public void deleteAll() {
-        new DeleteTransactionPresenter(this).delete(mTransaction.getGroup());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                Intent intent = new Intent(this, UpdateTransactionActivity.class);
+                intent.putExtra(Transaction.class.getSimpleName(), mTransaction);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.action_delete:
+                new DeleteTransactionPresenter(this).delete(mTransaction);
+                break;
+            case R.id.action_delete_all:
+                new DeleteTransactionPresenter(this).delete(mTransaction.getGroup());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -19,9 +19,9 @@ import butterknife.OnClick;
 
 public class SearchPeriodActivity extends BaseActivity implements UpdateAmount.View {
 
-    @BindView(R.id.start_text)
+    @BindView(R.id.first_text)
     TextView start_text;
-    @BindView(R.id.end_text)
+    @BindView(R.id.second_text)
     TextView end_text;
     @BindView(R.id.amountText)
     TextView amountText;

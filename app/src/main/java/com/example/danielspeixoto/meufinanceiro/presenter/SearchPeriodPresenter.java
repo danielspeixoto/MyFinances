@@ -50,8 +50,8 @@ public class SearchPeriodPresenter implements SearchInPeriod.Presenter {
             @Override
             public void onNext(Transaction transaction) {
                 expirationDate = transaction.getExpirationDate();
-                if(DateString.compareDates(expirationDate, startDate) <= 0 &&
-                        DateString.compareDates(expirationDate, endDate) >= 0) {
+                if(DateString.compareDates(expirationDate, startDate) >= 0 &&
+                        DateString.compareDates(expirationDate, endDate) <= 0) {
                     mView.addItem(transaction);
                     mItems.add(transaction);
                     amount += transaction.isDebt() ? transaction.getAmount() * -1 : transaction.getAmount() ;

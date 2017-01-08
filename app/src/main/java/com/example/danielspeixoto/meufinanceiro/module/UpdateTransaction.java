@@ -9,14 +9,14 @@ import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 
 public class UpdateTransaction {
 
-    public interface View<T> extends Base.View {
+    public interface View<T> extends ActivityBase.View {
 
         void setRelatedItemIndex(int index);
 
         void addItem(Institution institution);
     }
 
-    public interface Presenter<T> extends Base.Presenter {
+    public interface Presenter<T> extends ActivityBase.Presenter {
 
         void update(T t);
 

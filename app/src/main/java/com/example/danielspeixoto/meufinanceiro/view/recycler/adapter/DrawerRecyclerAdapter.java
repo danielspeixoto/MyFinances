@@ -22,7 +22,7 @@ public class DrawerRecyclerAdapter extends BaseRecyclerAdapter {
     }
 
     @Override
-    public void refreshData() {
+    public void getItems() {
     }
 
     @Override

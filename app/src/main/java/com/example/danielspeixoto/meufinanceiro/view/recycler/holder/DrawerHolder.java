@@ -5,9 +5,9 @@ import android.widget.TextView;
 
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.view.activity.BaseActivity;
-import com.example.danielspeixoto.meufinanceiro.view.activity.InsertInstitutionActivity;
 import com.example.danielspeixoto.meufinanceiro.view.activity.PayedActivity;
 import com.example.danielspeixoto.meufinanceiro.view.activity.SearchPeriodActivity;
+import com.example.danielspeixoto.meufinanceiro.view.dialog.InsertInstitutionDialog;
 import com.example.danielspeixoto.meufinanceiro.view.recycler.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
@@ -37,7 +37,7 @@ public class DrawerHolder extends BaseHolder {
     public void itemClicked() {
         switch (index) {
             case NEW_INSTITUTION:
-                mActivity.goToActivity(InsertInstitutionActivity.class);
+                new InsertInstitutionDialog(mActivity).show();
                 break;
             case SEARCH_PERIOD:
                 mActivity.goToActivity(SearchPeriodActivity.class);

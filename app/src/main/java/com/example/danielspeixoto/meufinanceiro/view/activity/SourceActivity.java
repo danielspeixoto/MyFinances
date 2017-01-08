@@ -31,16 +31,8 @@ public abstract class SourceActivity extends BaseActivity {
                 case SwipeHelper.RIGHT:
                     mAdapter.togglePayed(viewHolder.getLayoutPosition());
                     break;
-                case SwipeHelper.LEFT:
-                    break;
             }
         }).attachToRecyclerView(list);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mAdapter.refreshData();
     }
 
 }

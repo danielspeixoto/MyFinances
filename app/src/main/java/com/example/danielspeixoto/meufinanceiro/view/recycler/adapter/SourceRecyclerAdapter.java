@@ -19,8 +19,7 @@ public class SourceRecyclerAdapter extends TransactionsRecyclerAdapter implement
     }
 
     @Override
-    public void refreshData() {
-        data.clear();
+    public void getItems() {
         presenter.selectAll();
         notifyDataSetChanged();
     }

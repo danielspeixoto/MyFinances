@@ -4,18 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.danielspeixoto.meufinanceiro.R;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
-import com.example.danielspeixoto.meufinanceiro.util.Convert;
+import com.example.danielspeixoto.meufinanceiro.module.DateGetter;
 import com.example.danielspeixoto.meufinanceiro.view.custom.FrequencySpinner;
+import com.example.danielspeixoto.meufinanceiro.view.dialog.DateDialog;
 
 import java.util.ArrayList;
 
@@ -32,28 +33,26 @@ public abstract class DataTransactionActivity extends BaseActivity {
     ArrayList<Institution> institutions = new ArrayList<>();
     ArrayAdapter mAdapter;
 
-    @BindView(R.id.nameEdit)
-    EditText nameEdit;
+    @BindView(R.id.descriptionEdit)
+    EditText descriptionEdit;
     @BindView(R.id.amountEdit)
     EditText amountEdit;
-    @BindView(R.id.commentsEdit)
-    EditText commentsEdit;
     @BindView(R.id.institutionSpinner)
     Spinner institutionSpinner;
     @BindView(R.id.debtButton)
     RadioButton debtButton;
-    @BindView(R.id.launchedDate)
-    DatePicker launchedDate;
-    @BindView(R.id.expirationDate)
-    DatePicker expirationDate;
-    @BindView(R.id.frequencyGrid)
-    GridLayout frequencyGrid;
-    @BindView(R.id.repeatsCheck)
-    CheckBox repeatsCheck;
+    @BindView(R.id.frequencyRelative)
+    RelativeLayout frequencyRelative;
+    @BindView(R.id.repeatsSwitch)
+    Switch repeatsSwitch;
     @BindView(R.id.numberOfTimes)
     EditText numberOfTimes;
     @BindView(R.id.frequencySpinner)
     FrequencySpinner frequencySpinner;
+    @BindView(R.id.first_text)
+    TextView first_text;
+    @BindView(R.id.second_text)
+    TextView second_text;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,28 +61,47 @@ public abstract class DataTransactionActivity extends BaseActivity {
         institutionSpinner.setAdapter(mAdapter);
     }
 
+    @OnClick(R.id.startDateButton)
+    public void selectStartDate() {
+        selectDateDialog(first_text);
+    }
+
+    @OnClick(R.id.endDateButton)
+    public void selectEndDate() {
+        selectDateDialog(second_text);
+    }
+
+    public void selectDateDialog(TextView textView) {
+        DateGetter.View dateGetter =  new DateDialog(this, textView::setText);
+        dateGetter.setDate(textView.getText().toString());
+        dateGetter.show();
+    }
+
     public void addItem(Institution institution) {
         institutions.add(institution);
         mAdapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.repeatsCheck)
+    @OnClick(R.id.repeatsSwitch)
     public void toggleGridLayout() {
-        if(repeatsCheck.isChecked()) {
-            frequencyGrid.setVisibility(View.VISIBLE);
+        if(repeatsSwitch.isChecked()) {
+            frequencyRelative.setVisibility(View.VISIBLE);
         } else {
-            frequencyGrid.setVisibility(View.GONE);
+            frequencyRelative.setVisibility(View.GONE);
         }
     }
 
     @OnClick(R.id.fab)
     protected void save() {
-        mTransaction.setAmount(Double.valueOf(amountEdit.getText().toString()));
-        mTransaction.setName(nameEdit.getText().toString());
-        mTransaction.setLaunchedDate(Convert.dateToString(launchedDate));
-        mTransaction.setExpirationDate(Convert.dateToString(expirationDate));
-        mTransaction.setComments(commentsEdit.getText().toString());
-        mTransaction.setDebt(debtButton.isChecked());
-        mTransaction.setInstitutionId(((Institution)institutionSpinner.getSelectedItem()).getId());
+        if(!amountEdit.getText().toString().equals(EMPTY_STRING)) {
+            mTransaction.setAmount(Double.valueOf(amountEdit.getText().toString()));
+            mTransaction.setDescription(descriptionEdit.getText().toString());
+            mTransaction.setLaunchedDate(first_text.getText().toString());
+            mTransaction.setExpirationDate(second_text.getText().toString());
+            mTransaction.setDebt(debtButton.isChecked());
+            mTransaction.setInstitutionId(((Institution)institutionSpinner.getSelectedItem()).getId());
+        } else {
+            showMessage("Amount must have a value");
+        }
     }
 }

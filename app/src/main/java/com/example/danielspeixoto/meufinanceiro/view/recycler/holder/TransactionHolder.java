@@ -22,7 +22,7 @@ import lombok.Setter;
 
 public class TransactionHolder extends ItemHolder {
 
-    @BindView(R.id.nameText)
+    @BindView(R.id.descriptionText)
     @Getter
     TextView nameText;
     @BindView(R.id.expirationText)
@@ -47,14 +47,15 @@ public class TransactionHolder extends ItemHolder {
             expirationText.setTextColor(Color.RED);
             amount = "-";
         }
-        if(!transaction.getExpirationDate().equals(DateString.getToday())) {
+        if(!transaction.isPayed() &&
+                DateString.compareDates(transaction.getExpirationDate(), DateString.getToday()) <= 0) {
             nameText.setTextColor(Color.BLACK);
             amountText.setTextColor(Color.BLACK);
             expirationText.setTextColor(Color.BLACK);
         }
         amount += "$" + transaction.getAmount();
         getAmountText().setText(amount);
-        getNameText().setText(transaction.getName());
+        getNameText().setText(transaction.getDescription());
         getExpirationText().setText(transaction.getExpirationDate());
     }
 

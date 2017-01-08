@@ -12,7 +12,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.activity.MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
@@ -22,17 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.InsertInstitutionActivity"
-            android:label="@string/title_activity_insert_institution"
-            android:parentActivityName=".view.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.danielspeixoto.meufinanceiro.view.activity.MainActivity" />
-        </activity>
-        <activity
             android:name=".view.activity.InsertTransactionActivity"
-            android:label="@string/title_activity_insert_transaction"
             android:parentActivityName=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -41,7 +30,6 @@
         </activity>
         <activity
             android:name=".view.activity.UpdateTransactionActivity"
-            android:label="UpdateTransactionActivity"
             android:parentActivityName=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -50,7 +38,6 @@
         </activity>
         <activity
             android:name=".view.activity.InfoTransactionActivity"
-            android:label="InfoTransactionActivity"
             android:parentActivityName=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -59,7 +46,6 @@
         </activity>
         <activity
             android:name=".view.activity.SearchPeriodActivity"
-            android:label="@string/title_activity_search_period"
             android:parentActivityName=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -68,7 +54,15 @@
         </activity>
         <activity
             android:name=".view.activity.PayedActivity"
-            android:label="@string/title_activity_payed"
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.danielspeixoto.meufinanceiro.view.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".view.activity.AllInstitutionsActivity"
+            android:label="@string/title_activity_all_institutions"
             android:parentActivityName=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

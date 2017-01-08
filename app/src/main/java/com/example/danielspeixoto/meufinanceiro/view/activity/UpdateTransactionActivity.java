@@ -11,7 +11,6 @@ import com.example.danielspeixoto.meufinanceiro.model.pojo.Frequency;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.UpdateTransaction;
 import com.example.danielspeixoto.meufinanceiro.presenter.UpdateTransactionPresenter;
-import com.example.danielspeixoto.meufinanceiro.util.DateString;
 
 import butterknife.BindView;
 
@@ -24,25 +23,21 @@ public class UpdateTransactionActivity extends DataTransactionActivity implement
     RadioButton creditButton;
     @BindView(R.id.frequencyLinear)
     LinearLayout frequencyLinear;
-    UpdateTransaction.Presenter<Transaction> mPresenter;
+    UpdateTransaction.Presenter<Transaction> mPresenter = new UpdateTransactionPresenter(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTransaction = getIntent().getParcelableExtra(Transaction.class.getSimpleName());
-        mPresenter = new UpdateTransactionPresenter(this);
         mPresenter.selectInstitutions(mTransaction.getInstitutionId());
         if(!mTransaction.getGroup().equals("General")) {
             // Only transactions in general can edit their repeatability
             frequencyLinear.setVisibility(View.GONE);
         }
-        nameEdit.setText(mTransaction.getName());
+        descriptionEdit.setText(mTransaction.getDescription());
         amountEdit.setText(Double.toString(mTransaction.getAmount()));
-        DateString dateString = new DateString(mTransaction.getLaunchedDate());
-        launchedDate.updateDate(dateString.stringToYear(), dateString.stringToMonth(), dateString.stringToDay());
-        dateString.setDate(mTransaction.getExpirationDate());
-        expirationDate.updateDate(dateString.stringToYear(), dateString.stringToMonth(), dateString.stringToDay());
-        commentsEdit.setText(mTransaction.getComments());
+        first_text.setText(mTransaction.getLaunchedDate());
+        second_text.setText(mTransaction.getExpirationDate());
         if(mTransaction.isDebt()) {
             debtButton.toggle();
         } else {

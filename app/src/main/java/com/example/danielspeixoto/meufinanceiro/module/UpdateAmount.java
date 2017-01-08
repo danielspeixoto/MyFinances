@@ -6,13 +6,13 @@ package com.example.danielspeixoto.meufinanceiro.module;
 
 public class UpdateAmount {
 
-    public interface View extends Base.View {
+    public interface View extends ActivityBase.View {
 
         void onAmountReceived(double amountOfMoney);
 
     }
 
-    public interface Presenter extends Base.Presenter {
+    public interface Presenter extends ActivityBase.Presenter {
 
     }
 }

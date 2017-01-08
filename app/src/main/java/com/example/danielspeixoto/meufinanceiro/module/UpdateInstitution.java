@@ -3,19 +3,20 @@ package com.example.danielspeixoto.meufinanceiro.module;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 
 /**
- * Created by danielspeixoto on 1/7/17.
+ * Created by danielspeixoto on 1/8/17.
  */
 
-public class InsertInstitution {
+public class UpdateInstitution {
 
-    public interface View extends DialogBase.View {
+    public interface View {
+
+        void finalize();
 
     }
 
-    public interface Presenter extends DialogBase.Presenter {
+    public interface Presenter {
 
         void insert(Institution institution);
 
     }
-
 }

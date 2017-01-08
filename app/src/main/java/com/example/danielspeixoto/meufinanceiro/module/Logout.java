@@ -6,8 +6,8 @@ package com.example.danielspeixoto.meufinanceiro.module;
 
 public class Logout {
 
-    public interface View extends Base.View {}
-    public interface Presenter extends Base.Presenter {
+    public interface View extends ActivityBase.View {}
+    public interface Presenter extends ActivityBase.Presenter {
         void logOut();
     }
 }

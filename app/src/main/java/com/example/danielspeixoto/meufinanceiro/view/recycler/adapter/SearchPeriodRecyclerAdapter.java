@@ -38,7 +38,7 @@ public class SearchPeriodRecyclerAdapter extends TransactionsRecyclerAdapter imp
     }
 
     @Override
-    public void refreshData() {
+    public void getItems() {
         data = mPresenter.getData();
         notifyDataSetChanged();
     }

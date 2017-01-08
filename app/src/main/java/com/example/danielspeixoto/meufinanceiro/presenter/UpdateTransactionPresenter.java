@@ -1,12 +1,13 @@
 package com.example.danielspeixoto.meufinanceiro.presenter;
 
+import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
 import com.example.danielspeixoto.meufinanceiro.model.CRUDInstitutions;
 import com.example.danielspeixoto.meufinanceiro.model.CRUDTransactions;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 import com.example.danielspeixoto.meufinanceiro.module.UpdateTransaction;
-import com.example.danielspeixoto.meufinanceiro.helper.NoUserException;
 import com.example.danielspeixoto.meufinanceiro.util.Repeated;
+import com.example.danielspeixoto.meufinanceiro.util.Validate;
 
 import rx.Subscriber;
 
@@ -19,6 +20,7 @@ public class UpdateTransactionPresenter implements UpdateTransaction.Presenter<T
     private final UpdateTransaction.View<Transaction> mView;
     private CRUDTransactions mCRUD;
     private CRUDInstitutions mCRUDInstitutions;
+    String result;
 
     public UpdateTransactionPresenter(UpdateTransaction.View<Transaction> mView) {
         this.mView = mView;
@@ -31,17 +33,26 @@ public class UpdateTransactionPresenter implements UpdateTransaction.Presenter<T
     }
 
     @Override
-    public void update(Transaction Transaction) {
-        mCRUD.update(Transaction);
-        mView.getActivity().showMessage("Transaction updated");
-        mView.getActivity().finish();
+    public void update(Transaction transaction) {
+        result = Validate.transaction(transaction);
+        if(result.equals(Validate.SUCCESS)) {
+            mCRUD.update(transaction);
+            result = "Transaction updated";
+            mView.getActivity().finish();
+        }
+        mView.getActivity().showMessage(result);
+
     }
 
     @Override
     public void update(Transaction transaction, int amount, int frequency) {
-        mCRUD.delete(transaction);
-        mCRUD.insert(Repeated.generateTransactions(transaction, amount, frequency));
-        mView.getActivity().showMessage("Transactions updated");
+        result = Validate.transaction(transaction);
+        if(result.equals(Validate.SUCCESS)) {
+            mCRUD.delete(transaction);
+            mCRUD.insert(Repeated.generateTransactions(transaction, amount, frequency));
+            result = "Transactions updated";
+        }
+        mView.getActivity().showMessage(result);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class DateString {
     }
 
     public static int compareDates(String date1, String date2) {
-        return getCalendar(new DateString(date2)).compareTo(getCalendar(new DateString(date1)));
+        return getCalendar(new DateString(date1)).compareTo(getCalendar(new DateString(date2)));
     }
 
     private static Calendar getCalendar(DateString dateString) {

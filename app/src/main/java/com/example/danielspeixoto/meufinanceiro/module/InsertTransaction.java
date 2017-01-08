@@ -8,11 +8,11 @@ import com.example.danielspeixoto.meufinanceiro.model.pojo.Transaction;
 
 public class InsertTransaction {
 
-    public interface View extends Base.View {
+    public interface View extends ActivityBase.View {
 
     }
 
-    public interface Presenter extends Base.Presenter {
+    public interface Presenter extends ActivityBase.Presenter {
 
         void insert(Transaction transaction);
 

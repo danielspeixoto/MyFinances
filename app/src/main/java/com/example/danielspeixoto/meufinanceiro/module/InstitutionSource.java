@@ -8,13 +8,13 @@ import com.example.danielspeixoto.meufinanceiro.model.pojo.Institution;
 
 public class InstitutionSource {
 
-    public interface View extends Base.View {
+    public interface View extends ActivityBase.View {
 
         void addItem(Institution institution);
 
     }
 
-    public interface Presenter extends Base.Presenter {
+    public interface Presenter extends ActivityBase.Presenter {
 
         void selectAll();
 
